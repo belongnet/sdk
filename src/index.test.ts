@@ -4,7 +4,10 @@ import * as exports from './index.js'
 
 test('exports', () => {
   expect(Object.keys(exports)).toMatchInlineSnapshot(`
-    [
-    ]
+  [
+    "EventType",
+    "createPaymentFrame",
+    "isBelongPaymentEvent",
+  ]
   `)
 })

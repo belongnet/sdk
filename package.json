@@ -1,5 +1,5 @@
 {
-  "name": "packagename",
+  "name": "@belongnet/sdk",
   "version": "0.0.0",
   "description": "description",
   "keywords": [
@@ -7,10 +7,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/username/packagename.git"
+    "url": "https://github.com/belongnet/sdk.git"
   },
   "license": "MIT",
-  "author": "username",
+  "author": "reslear",
   "type": "module",
   "exports": {
     ".": {
@@ -35,7 +35,9 @@
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
-  "dependencies": {},
+  "dependencies": {
+    "valibot": "^0.30.0"
+  },
   "peerDependencies": {
     "typescript": ">=5.0.4"
   },
@@ -45,6 +47,7 @@
     }
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@vitest/coverage-v8": "^1.5.0",
     "@vitest/ui": "^1.5.0",
     "prettier": "^3.2.5",

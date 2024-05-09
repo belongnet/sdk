@@ -5,22 +5,18 @@ import Inspect from 'vite-plugin-inspect'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    Inspect(),
-  ],
+  plugins: [vue(), Inspect()],
 
   resolve: {
     alias: {
-      'packagename': resolve('../src/index.ts'),
+      '@belongnet/sdk': resolve('../src/index.ts'),
     },
   },
 
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-        },
+        manualChunks: {},
       },
     },
   },

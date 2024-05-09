@@ -1,59 +1,88 @@
-# packagename 
+# @belongnet/sdk
 
+A JavaScript SDK for integrating with [Belong.net](https://belong.net)
 
-> 1. find `packagename` and replace with your packagename name (in vscode in all files)
-> 
-> 1. also find `username` and replace with your name
-> 
-> 1. First commit create as tag
-> 
-> 1. for release npm set `NPM_TOKEN` on github secrets.
-> 
-> 1. and remove this line
+[![Version](https://img.shields.io/npm/v/@belongnet/sdk)](https://www.npmjs.com/@belongnet/sdk)
+[![Downloads](https://img.shields.io/npm/dt/@belongnet/sdk)](https://www.npmjs.com/@belongnet/sdk)
+[![install size](https://packagephobia.com/badge?p=@belongnet/sdk)](https://packagephobia.com/result?p=@belongnet/sdk)
+![npm bundle size](https://img.shields.io/bundlephobia/min/@belongnet/sdk)
 
-[![Version](https://img.shields.io/npm/v/packagename)](https://www.npmjs.com/packagename)
-[![Downloads](https://img.shields.io/npm/dt/packagename)](https://www.npmjs.com/packagename)
-[![install size](https://packagephobia.com/badge?p=packagename)](https://packagephobia.com/result?p=packagename)
-![npm bundle size](https://img.shields.io/bundlephobia/min/packagename)
-
-
-[publint](https://publint.dev/packagename) | 
-[arethetypeswrong](https://arethetypeswrong.github.io/?p=packagename)
-
-
-Description
+[publint](https://publint.dev/@belongnet/sdk) |
+[arethetypeswrong](https://arethetypeswrong.github.io/?p=@belongnet/sdk)
 
 ## Installation
 
-You can install **packagename** using npm, yarn, or pnpm:
-
+You can install using npm, yarn, or pnpm:
 
 ```bash
-pnpm add packagename
+pnpm add @belongnet/sdk
+
+# or
+npm install @belongnet/sdk
+
+# or
+yarn add @belongnet/sdk
 ```
 
-Once installed, you can use the packagename in your project by importing it:
+Once installed, you can use in your project by importing it:
 
 ```ts
-import { } from 'packagename';
+import { createPaymentFrame } from '@belongnet/sdk'
 
+createPaymentFrame({
+  el: document.getElementById('belong-payment-frame'),
+  params: {
+    target: 'event-ticket',
+    hubId: 'f9b2ea4c7be71407fcb6ed2c',
+  },
+})
 ```
-
-Enjoy!
 
 ## Advanced Usage
 
-```ts
-import { } from 'packagename';
+### Event listeners:
 
+```ts
+import { isBelongEvent } from '@belongnet/sdk'
+
+function handlePayment(e: MessageEvent) {
+  if (isBelongPaymentEvent(e)) {
+    switch (e.data.type) {
+      case 'payment-success':
+        console.log('payment-success', e.data.payload.link)
+        break
+      case 'payment-failure':
+        console.log('payment-failure', e.data.payload.error)
+        break
+      case 'payment-cancel':
+        console.log('payment-cancel', e.data.payload)
+        break
+      case 'payment-error':
+        console.log('payment-error', e.data.payload)
+        break
+    }
+  }
+}
+
+// add event listener
+window.addEventListener('message', handlePayment)
+
+// don't forget to remove the event listener
+function onUnmount() {
+  window.removeEventListener('message', handlePayment)
+}
 ```
 
+## Api
 
-## Uses source links
-- 
+### `createPaymentFrame`
 
-## Related
-- 
+Create a payment frame.
+
+### `isBelongEvent`
+
+Check if the event is a belong event.
 
 ## License
+
 This project is licensed under the terms of the [MIT license](LICENSE).
