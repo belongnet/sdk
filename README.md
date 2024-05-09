@@ -51,12 +51,6 @@ function handlePayment(e: MessageEvent) {
       case 'payment-success':
         console.log('payment-success', e.data.payload.link)
         break
-      case 'payment-failure':
-        console.log('payment-failure', e.data.payload.error)
-        break
-      case 'payment-cancel':
-        console.log('payment-cancel', e.data.payload)
-        break
       case 'payment-error':
         console.log('payment-error', e.data.payload)
         break

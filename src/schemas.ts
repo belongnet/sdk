@@ -7,7 +7,7 @@ export enum ModeOrigin {
 
 export const ModeScheme = enum_(ModeOrigin)
 
-export const CheckoutParamsSchema = variant('target', [
+export const ParamsSchema = variant('target', [
   object({
     target: literal('event-ticket'),
     eventId: string(),
@@ -22,13 +22,13 @@ export const CheckoutParamsSchema = variant('target', [
 
 export const BelongPaymentEventDataSchema = variant('type', [
   object({
-    type: literal('checkout-success'),
+    type: literal('payment-success'),
     payload: object({
       link: string(),
     }),
   }),
   object({
-    type: literal('checkout-error'),
+    type: literal('payment-error'),
     payload: object({
       error: string(),
     }),

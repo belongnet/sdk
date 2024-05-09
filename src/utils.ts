@@ -1,16 +1,16 @@
 import { parse, safeParse } from 'valibot'
 import {
-  CheckoutParamsSchema,
+  ParamsSchema,
   BelongPaymentEventDataSchema,
   ModeScheme,
 } from './schemas.js'
-import type { BelongPaymentEventData, CheckoutParams, Mode } from './types.js'
+import type { BelongPaymentEventData, Params, Mode } from './types.js'
 
 /**
  * Generates a payment URL based on the provided environment and checkout parameters.
  */
-export function generatePaymentUrl(params: CheckoutParams, mode: Mode) {
-  const params_ = parse(CheckoutParamsSchema, params)
+export function generatePaymentUrl(params: Params, mode: Mode) {
+  const params_ = parse(ParamsSchema, params)
 
   const base = parse(ModeScheme, mode)
 
