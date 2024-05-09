@@ -18,7 +18,19 @@ npm install @belongnet/sdk
 yarn add @belongnet/sdk
 ```
 
-Once installed, you can use in your project by importing it:
+#### CDN:
+
+add to the bottom of your HTML file with the following content.
+
+```html
+<script type="module">
+  import { createPaymentFrame } from 'https://esm.sh/@belongnet/sdk'
+</script>
+```
+
+#### Usage:
+
+Use in your project by importing it:
 
 ```ts
 import { createPaymentFrame } from '@belongnet/sdk'
@@ -35,6 +47,8 @@ createPaymentFrame({
 ## Advanced Usage
 
 ### Event listeners:
+
+You can listen to the events from the payment frame.
 
 ```ts
 import { isBelongEvent } from '@belongnet/sdk'
