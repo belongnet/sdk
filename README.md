@@ -3,12 +3,6 @@
 A JavaScript SDK for integrating with [Belong.net](https://belong.net)
 
 [![Version](https://img.shields.io/npm/v/@belongnet/sdk)](https://www.npmjs.com/@belongnet/sdk)
-[![Downloads](https://img.shields.io/npm/dt/@belongnet/sdk)](https://www.npmjs.com/@belongnet/sdk)
-[![install size](https://packagephobia.com/badge?p=@belongnet/sdk)](https://packagephobia.com/result?p=@belongnet/sdk)
-![npm bundle size](https://img.shields.io/bundlephobia/min/@belongnet/sdk)
-
-[publint](https://publint.dev/@belongnet/sdk) |
-[arethetypeswrong](https://arethetypeswrong.github.io/?p=@belongnet/sdk)
 
 ## Installation
 
