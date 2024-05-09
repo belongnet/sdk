@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.3
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.0.2...v0.0.3)
+
+### 📖 Documentation
+
+- Simplify docs ([3b8cb78](https://github.com/belongnet/sdk/commit/3b8cb78))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.0.2
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.0.1...v0.0.2)
