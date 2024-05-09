@@ -1,4 +1,4 @@
-import { CheckoutParams, type Mode } from './schemas.js'
+import { type CheckoutParams, type Mode } from './schemas.js'
 
 export interface Options {
   mode: Mode

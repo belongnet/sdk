@@ -3,9 +3,9 @@ import {
   type CheckoutParams,
   CheckoutParamsSchema,
   BelongPaymentEventDataSchema,
-  BelongPaymentEventData,
   ModeScheme,
   type Mode,
+  type BelongPaymentEventData,
 } from './schemas.js'
 
 /**

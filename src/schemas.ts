@@ -1,12 +1,11 @@
 import {
   object,
-  type Output,
   string,
   variant,
   literal,
   optional,
   enum_,
-  parse,
+  type Output,
 } from 'valibot'
 
 export enum ModeOrigin {
