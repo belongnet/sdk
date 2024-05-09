@@ -1,12 +1,10 @@
 import { parse, safeParse } from 'valibot'
 import {
-  type CheckoutParams,
   CheckoutParamsSchema,
   BelongPaymentEventDataSchema,
   ModeScheme,
-  type Mode,
-  type BelongPaymentEventData,
 } from './schemas.js'
+import type { BelongPaymentEventData, CheckoutParams, Mode } from './types.js'
 
 /**
  * Generates a payment URL based on the provided environment and checkout parameters.
@@ -39,8 +37,8 @@ export function createFrame(url: string) {
     width: '100%',
     height: '100%',
     frameBorder: '0',
-    scrolling: 'no',
     src: url,
+    id: 'belong-payment-frame',
   })
 
   return frame
@@ -54,6 +52,14 @@ export function mountFrame(frame: HTMLIFrameElement, element: HTMLElement) {
     throw new Error('Element not found')
   }
 
+  // prevent multiple frames from being mounted
+  const existingFrame = document.getElementById('belong-payment-frame')
+
+  if (existingFrame) {
+    element.removeChild(existingFrame)
+  }
+
+  // Append the frame to the provided element
   element.appendChild(frame)
 
   return frame
