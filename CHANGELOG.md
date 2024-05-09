@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.4
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.0.3...v0.0.4)
+
+### 🩹 Fixes
+
+- Docs, ignore npm ([7a3274f](https://github.com/belongnet/sdk/commit/7a3274f))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.0.3
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.0.2...v0.0.3)
