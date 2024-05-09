@@ -36,6 +36,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "query-string": "^9.0.0",
     "valibot": "^0.30.0"
   },
   "peerDependencies": {

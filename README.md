@@ -6,6 +6,8 @@ A JavaScript SDK for integrating with [Belong.net](https://belong.net)
 
 ## Installation
 
+#### NPM:
+
 You can install using npm, yarn, or pnpm:
 
 ```bash
@@ -16,6 +18,12 @@ npm install @belongnet/sdk
 
 # or
 yarn add @belongnet/sdk
+```
+
+and then import it in your project:
+
+```ts
+import { createPaymentFrame } from '@belongnet/sdk'
 ```
 
 #### CDN:
@@ -30,11 +38,9 @@ add to the bottom of your HTML file with the following content.
 
 #### Usage:
 
-Use in your project by importing it:
+Use in your project:
 
 ```ts
-import { createPaymentFrame } from '@belongnet/sdk'
-
 createPaymentFrame({
   el: document.getElementById('belong-payment-frame'),
   params: {

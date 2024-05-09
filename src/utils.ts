@@ -1,21 +1,36 @@
-import { parse, safeParse } from 'valibot'
-import {
-  ParamsSchema,
-  BelongPaymentEventDataSchema,
-  ModeScheme,
-} from './schemas.js'
+import * as v from 'valibot'
+import { ParamsSchema, BelongPaymentEventDataSchema } from './schemas.js'
 import type { BelongPaymentEventData, Params, Mode } from './types.js'
+import queryString from 'query-string'
+
+/**
+ * Returns the origin based on the provided mode.
+ */
+export function getOrigin(value: Mode) {
+  switch (value) {
+    case 'production':
+      return 'https://app.belong.net'
+    case 'staging':
+      return '***REMOVED***'
+    default:
+      throw new Error('Invalid origin')
+  }
+}
 
 /**
  * Generates a payment URL based on the provided environment and checkout parameters.
  */
-export function generatePaymentUrl(params: Params, mode: Mode) {
-  const params_ = parse(ParamsSchema, params)
+export function generatePaymentUrl(params: Params, mode: Mode = 'production') {
+  const query = v.parse(ParamsSchema, params)
 
-  const base = parse(ModeScheme, mode)
-
-  const query = new URLSearchParams({ ...params_ })
-  const url = new URL('/payments?' + query.toString(), base)
+  const base = getOrigin(mode)
+  const url = queryString.stringifyUrl(
+    { url: base + '/payments', query },
+    {
+      skipEmptyString: true,
+      skipNull: true,
+    }
+  )
 
   return url.toString()
 }
@@ -71,6 +86,6 @@ export function mountFrame(frame: HTMLIFrameElement, element: HTMLElement) {
 export function isBelongPaymentEvent(
   event: MessageEvent
 ): event is MessageEvent<BelongPaymentEventData> {
-  const result = safeParse(BelongPaymentEventDataSchema, event)
+  const result = v.safeParse(BelongPaymentEventDataSchema, event)
   return result.success
 }

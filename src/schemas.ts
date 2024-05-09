@@ -1,42 +1,38 @@
-import { object, string, variant, literal, optional, enum_ } from 'valibot'
+import * as v from 'valibot'
+import { PaymentTarget } from './enums.js'
 
-export enum ModeOrigin {
-  production = 'https://app.belong.net',
-  staging = '***REMOVED***',
-}
+export const ModeScheme = v.picklist(['production', 'staging'])
 
-export const ModeScheme = enum_(ModeOrigin)
-
-export const ParamsSchema = variant('target', [
-  object({
-    target: literal('event-ticket'),
-    eventId: string(),
-    key: optional(string()),
+export const ParamsSchema = v.variant('target', [
+  v.object({
+    target: v.literal(PaymentTarget.EventTicket),
+    eventId: v.string(),
+    key: v.optional(v.string()),
   }),
-  object({
-    target: literal('hub-minting'),
-    hubId: string(),
-    key: optional(string()),
+  v.object({
+    target: v.literal(PaymentTarget.HubMinting),
+    hubId: v.string(),
+    key: v.optional(v.string()),
   }),
 ])
 
-export const BelongPaymentEventDataSchema = variant('type', [
-  object({
-    type: literal('payment-success'),
-    payload: object({
-      link: string(),
+export const BelongPaymentEventDataSchema = v.variant('type', [
+  v.object({
+    type: v.literal('payment-success'),
+    payload: v.object({
+      link: v.string(),
     }),
   }),
-  object({
-    type: literal('payment-error'),
-    payload: object({
-      error: string(),
+  v.object({
+    type: v.literal('payment-error'),
+    payload: v.object({
+      error: v.string(),
     }),
   }),
 ])
 
-export const BelongPaymentEventSchema = object({
+export const BelongPaymentEventSchema = v.object({
   data: BelongPaymentEventDataSchema,
-  origin: string(),
-  source: literal('belong_payment'),
+  origin: v.string(),
+  source: v.literal('belong_payment'),
 })
