@@ -33,7 +33,8 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "prepublishOnly": "pnpm build",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "docgen": "pnpm dlx automd@latest"
   },
   "dependencies": {
     "query-string": "^9.0.0",

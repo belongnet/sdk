@@ -81,16 +81,40 @@ function onUnmount() {
 }
 ```
 
-## Api
+## API
 
-### `createPaymentFrame`
+<!-- automd:jsdocs src="src/index" -->
 
-Create a payment frame.
+### `createPaymentFrame(options)`
 
-### `isBelongEvent`
+Creates a payment frame for embedding payment forms.
 
-Check if the event is a belong event.
+### `isBelongPaymentEvent(event)`
+
+Checks if the provided event is a Belong payment event.
+
+### `PaymentTarget`
+
+#### `EventTicket`
+
+- **Type**: `string`
+- **Default**: `"event-ticket"`
+
+#### `HubMinting`
+
+- **Type**: `string`
+- **Default**: `"hub-minting"`
+
+<!-- /automd -->
 
 ## License
 
 This project is licensed under the terms of the [MIT license](LICENSE).
+
+<!-- automd:with-automd -->
+
+---
+
+_🤖 auto updated with [automd](https://automd.unjs.io)_
+
+<!-- /automd -->

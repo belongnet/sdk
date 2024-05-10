@@ -82,6 +82,8 @@ export function mountFrame(frame: HTMLIFrameElement, element: HTMLElement) {
 
 /**
  * Checks if the provided event is a Belong payment event.
+ * @param event - The event to check.
+ * @returns `true` if the event is a Belong payment event, otherwise `false`.
  */
 export function isBelongPaymentEvent(
   event: MessageEvent

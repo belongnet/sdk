@@ -1,6 +1,12 @@
 import type { Options } from './types.js'
 import { createFrame, generatePaymentUrl, mountFrame } from './utils.js'
 
+/**
+ * Creates a payment frame for embedding payment forms.
+ * @param options - The options for configuring the payment frame.
+ * @returns The created payment frame.
+ * ```
+ */
 export function createPaymentFrame(options: Options) {
   const { mode, params, el } = options
 
