@@ -1,8 +1,6 @@
 import * as v from 'valibot'
 import { PaymentTarget } from './enums.js'
 
-export const ModeScheme = v.picklist(['production', 'staging'])
-
 export const ParamsSchema = v.variant('target', [
   v.object({
     target: v.literal(PaymentTarget.EventTicket),

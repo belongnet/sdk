@@ -8,9 +8,9 @@ import { createFrame, generatePaymentUrl, mountFrame } from './utils.js'
  * ```
  */
 export function createPaymentFrame(options: Options) {
-  const { mode, params, el } = options
+  const { origin, params, el } = options
 
-  const url = generatePaymentUrl(params, mode)
+  const url = generatePaymentUrl(params, origin)
   let frame = createFrame(url)
 
   // Automatically mount the frame if an element is provided

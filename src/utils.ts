@@ -1,29 +1,18 @@
 import * as v from 'valibot'
 import { ParamsSchema, BelongPaymentEventDataSchema } from './schemas.js'
-import type { BelongPaymentEventData, Params, Mode } from './types.js'
+import type { BelongPaymentEventData, Params } from './types.js'
 import queryString from 'query-string'
 
-/**
- * Returns the origin based on the provided mode.
- */
-export function getOrigin(value: Mode) {
-  switch (value) {
-    case 'production':
-      return 'https://app.belong.net'
-    case 'staging':
-      return '***REMOVED***'
-    default:
-      throw new Error('Invalid origin')
-  }
-}
+const APP_LINK = 'https://app.belong.net'
 
 /**
  * Generates a payment URL based on the provided environment and checkout parameters.
  */
-export function generatePaymentUrl(params: Params, mode: Mode = 'production') {
+export function generatePaymentUrl(params: Params, origin: string = APP_LINK) {
   const query = v.parse(ParamsSchema, params)
 
-  const base = getOrigin(mode)
+  const base = v.parse(v.string([v.url()]), origin)
+
   const url = queryString.stringifyUrl(
     { url: base + '/payments', query },
     {
