@@ -57,7 +57,7 @@ createPaymentFrame({
 You can listen to the events from the payment frame.
 
 ```ts
-import { isBelongEvent } from '@belongnet/sdk'
+import { isBelongPaymentEvent } from '@belongnet/sdk'
 
 function handlePayment(e: MessageEvent) {
   if (isBelongPaymentEvent(e)) {
