@@ -11,7 +11,7 @@ const isDark = useDark()
 const state = useStorage<Options>(
   'state',
   {
-    mode: 'production',
+    origin: undefined,
     params: {
       target: PaymentTarget.EventTicket,
       eventId: '65cca181e81ea188206cf1dc',
@@ -24,14 +24,14 @@ const state = useStorage<Options>(
   }
 )
 
-const isError = ref(false)
+const errors = ref<string>()
 
 function isCorrectId(id: string) {
   return ('' + id).length && (isMongoId(id) || isSlug(id))
 }
 
 function generatePaymentFrame() {
-  isError.value = false
+  errors.value = undefined
 
   const p = toValue(state.value.params)
 
@@ -41,25 +41,30 @@ function generatePaymentFrame() {
     ((p.target === PaymentTarget.EventTicket && isCorrectId(p.eventId)) ||
       (p.target === PaymentTarget.HubMinting && isCorrectId(p.hubId)))
   ) {
-    return createPaymentFrame({
-      el: belongPaymentRef.value,
-      mode: state.value.mode,
-      params:
-        p.target === PaymentTarget.EventTicket
-          ? {
-              target: p.target,
-              key: p?.key,
-              eventId: p.eventId,
-            }
-          : {
-              target: p.target,
-              key: p?.key,
-              hubId: p.hubId,
-            },
-    })
+    try {
+      return createPaymentFrame({
+        el: belongPaymentRef.value,
+        origin: state.value.origin,
+        params:
+          p.target === PaymentTarget.EventTicket
+            ? {
+                target: p.target,
+                key: p?.key,
+                eventId: p.eventId,
+              }
+            : {
+                target: p.target,
+                key: p?.key,
+                hubId: p.hubId,
+              },
+      })
+    } catch (e: any) {
+      console.error(e)
+      errors.value = e.message
+    }
+  } else {
+    errors.value = 'Error: Please fill all fields correctly'
   }
-
-  isError.value = true
 }
 
 onMounted(() => {
@@ -80,21 +85,23 @@ onMounted(() => {
         </header>
 
         <section>
-          <h3>Mode</h3>
           <input
-            type="radio"
-            id="mode_production"
-            value="production"
-            v-model="state.mode"
+            id="custom_origin"
+            type="checkbox"
+            :checked="state.origin !== undefined"
+            @change="
+              ($event.target as HTMLInputElement).checked
+                ? (state.origin = '')
+                : (state.origin = undefined)
+            "
           />
-          <label for="mode_production">Production</label><br />
+          <label for="custom_origin">Enable custom origin</label><br />
           <input
-            type="radio"
-            id="mode_staging"
-            value="staging"
-            v-model="state.mode"
+            v-if="state.origin !== undefined"
+            type="text"
+            v-model="state.origin"
+            placeholder="Enter custom Origin..."
           />
-          <label for="mode_staging">Staging</label><br />
         </section>
 
         <section class="flex flex-col gap-2">
@@ -138,15 +145,31 @@ onMounted(() => {
 
             <div>Enter correct <b>slug</b> or <b>id (ObjectId)</b></div>
           </section>
+
           <section>
-            <h4>Key</h4>
-            <input type="text" v-model="state.params.key" placeholder="Key" />
+            <input
+              id="private_key"
+              type="checkbox"
+              :checked="state.params.key !== undefined"
+              @change="
+                ($event.target as HTMLInputElement).checked
+                  ? (state.params.key = '')
+                  : (state.params.key = undefined)
+              "
+            />
+            <label for="private_key">Use private key</label><br />
+            <input
+              v-if="state.params.key !== undefined"
+              type="text"
+              v-model="state.params.key"
+              placeholder="Enter Key..."
+            />
           </section>
         </section>
 
         <section>
-          <div v-show="isError" class="text-red my-2">
-            {{ isError ? 'Error: Please fill all fields correctly' : '' }}
+          <div v-show="errors" class="text-red my-2">
+            {{ errors }}
           </div>
 
           <button @click="generatePaymentFrame()">
@@ -190,7 +213,8 @@ h4 {
     @apply mt-2;
   }
 }
-input[type='radio'] {
+input[type='radio'],
+input[type='checkbox'] {
   & + label {
     @apply pl-2;
   }
