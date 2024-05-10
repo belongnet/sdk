@@ -45,7 +45,7 @@ createPaymentFrame({
   el: document.getElementById('belong-payment-frame'),
   params: {
     target: 'event-ticket',
-    hubId: 'f9b2ea4c7be71407fcb6ed2c',
+    eventId: 'f9b2ea4c7be71407fcb6ed2c',
   },
 })
 ```
