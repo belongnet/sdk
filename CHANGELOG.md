@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.6
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.0.5...v0.0.6)
+
+### 📖 Documentation
+
+- Autogenerate ([cc48363](https://github.com/belongnet/sdk/commit/cc48363))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.0.5
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.0.4...v0.0.5)
