@@ -1,8 +1,9 @@
 :root {
-  --bg-color: #242424;
-  --text-color: rgba(255, 255, 255, 0.87);
   color: var(--text-color);
   background-color: var(--bg-color);
+
+    --bg-color: #242424;
+  --text-color: rgba(255, 255, 255, 0.87);
 }
 
 a {
@@ -17,6 +18,13 @@ a:hover {
 html {
    height: 100%;
 }
+
+html.light {
+  --bg-color: #f6f6f7;
+  --text-color: #213547;
+}
+
+
 body {
   margin: 0;
   overflow-wrap: break-word;
@@ -53,20 +61,4 @@ button:focus-visible {
 
 .card {
   padding: 2em;
-}
-
-html.light {
-
-  --bg-color: #f6f6f7;
-  --text-color: #213547;
-  :root {
-    color: #213547;
-    background-color: #f6f6f7;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

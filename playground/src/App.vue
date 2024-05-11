@@ -328,7 +328,8 @@ const htmlCode = computed(() => {
 
 <style>
 html.dark .shiki,
-html.dark .shiki span {
+html.dark .shiki span,
+input[type='text'] {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
 }
