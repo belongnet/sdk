@@ -52,9 +52,6 @@ export function createFrame(data: { url: string; hash: string }) {
 
 export function getCurrentFrame(el?: HTMLElement) {
   const frame = el?.querySelector('iframe[data-' + FRAME_DATA_HASH_KEY + ']')
-
-  console.log({ frame, el })
-
   return frame && frame instanceof HTMLIFrameElement ? frame : null
 }
 
@@ -68,10 +65,8 @@ export function mountPaymentFrame({
 }: {
   el: HTMLElement
   frame: HTMLIFrameElement
-  currentFrame: HTMLIFrameElement | null
+  currentFrame?: HTMLIFrameElement | null
 }) {
-  if (!currentFrame) currentFrame = getCurrentFrame(el)
-
   if (currentFrame) {
     el.removeChild(currentFrame)
   }

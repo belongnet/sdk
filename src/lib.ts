@@ -25,12 +25,6 @@ export function createPaymentFrame(options: Options) {
     const currentHash = currentFrame?.getAttribute(
       'data-' + FRAME_DATA_HASH_KEY
     )
-
-    console.log({
-      hash,
-      currentHash,
-      currentFrame,
-    })
     if (hash === currentHash) {
       console.log('reusing frame')
       return currentFrame
