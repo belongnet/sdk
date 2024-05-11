@@ -12,6 +12,7 @@ import {
   createPaymentFrame,
   PaymentTarget,
   isBelongPaymentEvent,
+  postPaymentEvent,
 } from '@belongnet/sdk'
 import {
   StorageSerializers,
@@ -123,13 +124,10 @@ function handlePayment(e: MessageEvent) {
 }
 
 function showSampleMessage() {
-  parent.postMessage(
-    {
-      type: 'loaded',
-      payload: { msg: 'Emulate test post message ' },
-    },
-    '*'
-  )
+  postPaymentEvent({
+    type: 'loaded',
+    payload: { msg: 'Emulate test post message ' },
+  })
 }
 
 onBeforeUnmount(() => {

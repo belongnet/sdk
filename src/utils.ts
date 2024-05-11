@@ -90,3 +90,10 @@ export function isBelongPaymentEvent(
   console.log(result)
   return result.success
 }
+
+/**
+ * Sends a message to the parent window.
+ */
+export function postPaymentEvent(data: BelongPaymentEventData) {
+  window.parent.postMessage(data, '*')
+}
