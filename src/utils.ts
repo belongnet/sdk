@@ -4,6 +4,7 @@ import type { BelongPaymentEventData, Params } from './types.js'
 import queryString from 'query-string'
 
 const APP_LINK = 'https://app.belong.net'
+export const FRAME_DATA_HASH_KEY = 'belongnet-sdk'
 
 /**
  * Generates a payment URL based on the provided environment and checkout parameters.
@@ -34,37 +35,49 @@ export function generatePaymentUrl(params: Params, origin: string = APP_LINK) {
 /**
  * Creates an iframe element with the provided URL.
  */
-export function createFrame(url: string) {
+export function createFrame(data: { url: string; hash: string }) {
   const frame = document.createElement('iframe')
 
   Object.assign(frame, {
     width: '100%',
     height: '100%',
     frameBorder: '0',
-    src: url,
-    id: 'belong-payment-frame',
+    src: data.url,
   })
 
+  frame.setAttribute('data-' + FRAME_DATA_HASH_KEY, data.hash)
+
   return frame
+}
+
+export function getCurrentFrame(el?: HTMLElement) {
+  const frame = el?.querySelector('iframe[data-' + FRAME_DATA_HASH_KEY + ']')
+
+  console.log({ frame, el })
+
+  return frame && frame instanceof HTMLIFrameElement ? frame : null
 }
 
 /**
  * Mounts the provided iframe element to the provided element.
  */
-export function mountFrame(frame: HTMLIFrameElement, element: HTMLElement) {
-  if (!element) {
-    throw new Error('Element not found')
-  }
+export function mountPaymentFrame({
+  el,
+  frame,
+  currentFrame,
+}: {
+  el: HTMLElement
+  frame: HTMLIFrameElement
+  currentFrame: HTMLIFrameElement | null
+}) {
+  if (!currentFrame) currentFrame = getCurrentFrame(el)
 
-  // prevent multiple frames from being mounted
-  const existingFrame = document.getElementById('belong-payment-frame')
-
-  if (existingFrame) {
-    element.removeChild(existingFrame)
+  if (currentFrame) {
+    el.removeChild(currentFrame)
   }
 
   // Append the frame to the provided element
-  element.appendChild(frame)
+  el.appendChild(frame)
 
   return frame
 }
