@@ -34,7 +34,6 @@ body {
 
 #app {
   height: 100%;
-  //width: 100%;
 }
 
 button {
@@ -68,7 +67,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: #f6f6f7;
   }
   a:hover {
     color: #747bff;
