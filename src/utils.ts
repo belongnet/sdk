@@ -1,5 +1,5 @@
 import * as v from 'valibot'
-import { ParamsSchema, BelongPaymentEventDataSchema } from './schemas.js'
+import { ParamsSchema, BelongPaymentEventSchema } from './schemas.js'
 import type { BelongPaymentEventData, Params } from './types.js'
 import queryString from 'query-string'
 
@@ -85,6 +85,8 @@ export function mountPaymentFrame({
 export function isBelongPaymentEvent(
   event: MessageEvent
 ): event is MessageEvent<BelongPaymentEventData> {
-  const result = v.safeParse(BelongPaymentEventDataSchema, event)
+  const result = v.safeParse(BelongPaymentEventSchema, event)
+
+  console.log(result)
   return result.success
 }

@@ -16,6 +16,10 @@ export const ParamsSchema = v.variant('target', [
 
 export const BelongPaymentEventDataSchema = v.variant('type', [
   v.object({
+    type: v.literal('loaded'),
+    payload: v.object({}),
+  }),
+  v.object({
     type: v.literal('payment-success'),
     payload: v.object({
       link: v.string(),
@@ -31,6 +35,6 @@ export const BelongPaymentEventDataSchema = v.variant('type', [
 
 export const BelongPaymentEventSchema = v.object({
   data: BelongPaymentEventDataSchema,
-  origin: v.string(),
-  source: v.literal('belong_payment'),
+  //origin: v.string(),
+  //source: v.literal('belong_payment'),
 })

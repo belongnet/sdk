@@ -1,11 +1,24 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, toValue, watchEffect } from 'vue'
-import { type Options, createPaymentFrame, PaymentTarget } from '@belongnet/sdk'
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  toValue,
+  watchEffect,
+} from 'vue'
+import {
+  type Options,
+  createPaymentFrame,
+  PaymentTarget,
+  isBelongPaymentEvent,
+} from '@belongnet/sdk'
 import {
   StorageSerializers,
   useDark,
   useStorage,
   useClipboard,
+  useColorMode,
 } from '@vueuse/core'
 const belongPaymentRef = ref<HTMLElement | null>(null)
 import isMongoId from 'validator/es/lib/isMongoId'
@@ -13,8 +26,11 @@ import isSlug from 'validator/es/lib/isSlug'
 import { Icon } from '@iconify/vue'
 import { formatCode } from './formatter'
 import { usehighlighter } from './hl'
+import { Toaster, toast } from 'vue-sonner'
 
 const isDark = useDark()
+const mode = useColorMode({})
+
 const { copy } = useClipboard()
 const { highlighter } = usehighlighter()
 
@@ -82,7 +98,47 @@ function generatePaymentFrame() {
   }
 }
 
+function handlePayment(e: MessageEvent) {
+  console.log(e)
+  if (isBelongPaymentEvent(e)) {
+    let title = ''
+
+    switch (e.data.type) {
+      case 'payment-success':
+        console.log('payment-success', e.data.payload.link)
+        title = 'Payment Success'
+        break
+      case 'payment-error':
+        console.log('payment-error', e.data.payload)
+        title = 'Payment Error'
+        break
+    }
+
+    toast.message(title, {
+      description: JSON.stringify(e.data.payload, null, 2),
+      duration: Infinity,
+      closeButton: true,
+    })
+  }
+}
+
+function showSampleMessage() {
+  parent.postMessage(
+    {
+      type: 'loaded',
+      payload: { msg: 'Emulate test post message ' },
+    },
+    '*'
+  )
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('message', handlePayment)
+})
+
 onMounted(() => {
+  showSampleMessage()
+  window.addEventListener('message', handlePayment)
   generatePaymentFrame()
 })
 
@@ -111,6 +167,11 @@ const htmlCode = computed(() => {
 </script>
 
 <template>
+  <Toaster
+    :theme="isDark ? 'dark' : 'light'"
+    :visible-toasts="5"
+    position="bottom-left"
+  />
   <div class="container mx-auto">
     <main
       class="p-4 md:p-2 mx-auto grid md:py-10 box-border grid-cols-1 md:grid-cols-2 grid-rows-[auto_1fr] md:grid-rows-1 gap-8 h-screen"
@@ -125,16 +186,28 @@ const htmlCode = computed(() => {
       </section>
 
       <section class="flex flex-col gap-2 md:max-w-xl order-[-1] md:order-none">
-        <header class="flex flex-col gap-2">
-          <div>
-            <a
-              href="https://github.com/belongnet/sdk"
-              target="_blank"
-              class="flex items-center gap-2"
-            >
-              <h1 class="text-3xl font-bold line-height-0">@belongnet/sdk</h1>
-              <Icon icon="ion:logo-github" class="w-6 h-6"
-            /></a>
+        <header class="flex flex-col">
+          <div class="flex justify-between">
+            <div>
+              <a
+                href="https://github.com/belongnet/sdk"
+                target="_blank"
+                class="flex items-center gap-2"
+              >
+                <h1 class="text-3xl font-bold line-height-0">@belongnet/sdk</h1>
+                <Icon icon="ion:logo-github" class="w-6 h-6"
+              /></a>
+            </div>
+
+            <div>
+              <button
+                @click="mode = mode === 'dark' ? 'light' : 'dark'"
+                class="p-0 w-8 h-8 flex items-center justify-center"
+              >
+                <Icon v-if="mode === 'dark'" icon="carbon:moon" />
+                <Icon v-if="mode === 'light'" icon="carbon:sun" />
+              </button>
+            </div>
           </div>
           <p>Payment Frame Generator</p>
         </header>

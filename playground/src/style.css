@@ -1,17 +1,8 @@
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto',
-    sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-color: #242424;
+  --text-color: rgba(255, 255, 255, 0.87);
+  color: var(--text-color);
+  background-color: var(--bg-color);
 }
 
 a {
@@ -64,7 +55,10 @@ button:focus-visible {
   padding: 2em;
 }
 
-@media (prefers-color-scheme: light) {
+html.light {
+
+  --bg-color: #f6f6f7;
+  --text-color: #213547;
   :root {
     color: #213547;
     background-color: #f6f6f7;
