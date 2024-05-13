@@ -1,5 +1,5 @@
 import * as v from 'valibot'
-import { PaymentTarget } from './enums.js'
+import { PaymentEvent, PaymentTarget } from './enums.js'
 
 export const ParamsSchema = v.variant('target', [
   v.object({
@@ -16,17 +16,17 @@ export const ParamsSchema = v.variant('target', [
 
 export const BelongPaymentEventDataSchema = v.variant('type', [
   v.object({
-    type: v.literal('loaded'),
+    type: v.literal(PaymentEvent.Loaded),
     payload: v.object({}),
   }),
   v.object({
-    type: v.literal('payment-success'),
+    type: v.literal(PaymentEvent.PaymentSuccess),
     payload: v.object({
       link: v.string(),
     }),
   }),
   v.object({
-    type: v.literal('payment-error'),
+    type: v.literal(PaymentEvent.PaymentError),
     payload: v.object({
       error: v.string(),
     }),

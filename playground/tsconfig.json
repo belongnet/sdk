@@ -20,9 +20,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
   "include": [
+    "./typed-router.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue"

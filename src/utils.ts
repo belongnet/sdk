@@ -86,8 +86,6 @@ export function isBelongPaymentEvent(
   event: MessageEvent
 ): event is MessageEvent<BelongPaymentEventData> {
   const result = v.safeParse(BelongPaymentEventSchema, event)
-
-  console.log(result)
   return result.success
 }
 
