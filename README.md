@@ -95,6 +95,23 @@ Creates a payment frame for embedding payment forms.
 
 Checks if the provided event is a Belong payment event.
 
+### `PaymentEvent`
+
+#### `Loaded`
+
+- **Type**: `string`
+- **Default**: `"loaded"`
+
+#### `PaymentError`
+
+- **Type**: `string`
+- **Default**: `"payment-error"`
+
+#### `PaymentSuccess`
+
+- **Type**: `string`
+- **Default**: `"payment-success"`
+
 ### `PaymentTarget`
 
 #### `EventTicket`
@@ -106,6 +123,10 @@ Checks if the provided event is a Belong payment event.
 
 - **Type**: `string`
 - **Default**: `"hub-minting"`
+
+### `postPaymentEvent(data)`
+
+Sends a message to the parent window.
 
 <!-- /automd -->
 
