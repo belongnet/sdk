@@ -6,9 +6,10 @@ on:
       - v*
     branches:
       - main
-    paths-ignore:
-      - '**/README.md'
-      # - '.github/*.yml'
+
+    paths:
+      - 'playground/**'
+      - '.github/workflows/docs-deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -39,7 +40,7 @@ jobs:
 
       - run: pnpm --filter @belongnet/sdk build
 
-      - run: pnpm --filter playground build --base /playground
+      - run: pnpm --filter playground build --base /sdk/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1

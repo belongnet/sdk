@@ -6,9 +6,11 @@ on:
       - v*
     branches:
       - main
-    paths-ignore:
-      - '**/README.md'
-      # - '.github/*.yml'
+
+    paths:
+      - 'src/**'
+      - '.github/workflows/npm-publish.yml'
+
   workflow_dispatch:
 
 permissions:
