@@ -36,10 +36,10 @@ jobs:
           cache: pnpm
 
       - run: pnpm install
-        working-directory: ./playground
 
-      - run: pnpm build -- --base /playground
-        working-directory: ./playground
+      - run: pnpm --filter @belongnet/sdk build
+
+      - run: pnpm --filter playground build --base /playground
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
