@@ -15,19 +15,26 @@ import {
   postPaymentEvent,
   PaymentEvent,
 } from '@belongnet/sdk'
-import { useDark, useClipboard, useColorMode } from '@vueuse/core'
+import { useDark, useClipboard, useColorMode, useCycleList } from '@vueuse/core'
 import isMongoId from 'validator/es/lib/isMongoId'
 import isSlug from 'validator/es/lib/isSlug'
 import { Icon } from '@iconify/vue'
 import { useRouteHash } from '@vueuse/router'
-import { Toaster, toast } from 'vue-sonner'
+import { toast } from 'vue-sonner'
 import { formatCode } from '../formatter'
 import { usehighlighter } from '../hl'
 import { fromHash, toHash } from '../utils/hash'
 
 const belongPaymentRef = ref<HTMLElement | null>(null)
 const isDark = useDark()
-const mode = useColorMode({})
+const mode = useColorMode({
+  emitAuto: true,
+})
+const modeCycleList = useCycleList(['dark', 'light', 'auto'] as const, {
+  initialValue: mode,
+})
+watchEffect(() => (mode.value = modeCycleList.state.value))
+
 const hash = useRouteHash()
 const { copy } = useClipboard()
 const { highlighter } = usehighlighter()
@@ -116,6 +123,10 @@ function handlePayment(e: MessageEvent) {
         console.log('payment-error', e.data.payload)
         title = 'Payment Error'
         break
+      case PaymentEvent.Loaded:
+        console.log('payment-loaded', e.data.payload)
+        title = 'Payment Loaded (Simulated postMessage)'
+        break
     }
 
     toast.message(title, {
@@ -172,11 +183,6 @@ const htmlCode = computed(() => {
 </script>
 
 <template>
-  <Toaster
-    :theme="isDark ? 'dark' : 'light'"
-    :visible-toasts="5"
-    position="bottom-left"
-  />
   <div class="container mx-auto">
     <main
       class="p-4 md:p-2 mx-auto grid md:py-10 box-border grid-cols-1 md:grid-cols-2 grid-rows-[auto_1fr] md:grid-rows-1 gap-8 h-screen"
@@ -208,11 +214,12 @@ const htmlCode = computed(() => {
 
             <div>
               <button
-                @click="mode = mode === 'dark' ? 'light' : 'dark'"
+                @click="modeCycleList.next()"
                 class="p-0 w-8 h-8 flex items-center justify-center"
               >
                 <Icon v-if="mode === 'dark'" icon="carbon:moon" />
                 <Icon v-if="mode === 'light'" icon="carbon:sun" />
+                <Icon v-if="mode === 'auto'" icon="carbon:laptop" />
               </button>
             </div>
           </div>
