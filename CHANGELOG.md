@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v0.1.1
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.0.1...v0.1.1)
+
+### 🚀 Enhancements
+
+- Add postPaymentEvent [skip ci] ([6df86ad](https://github.com/belongnet/sdk/commit/6df86ad))
+
+### 🩹 Fixes
+
+- Styles [skip ci] ([d102162](https://github.com/belongnet/sdk/commit/d102162))
+
+### 💅 Refactors
+
+- Playground [skip ci] ([cd40423](https://github.com/belongnet/sdk/commit/cd40423))
+- Playground code generator [skip ci] ([56ff8cf](https://github.com/belongnet/sdk/commit/56ff8cf))
+- Hashing and dedup generate frame [skip ci] ([43036d5](https://github.com/belongnet/sdk/commit/43036d5))
+- Remove logs, dedup currentFrame [skip ci] ([9722767](https://github.com/belongnet/sdk/commit/9722767))
+- Correct post message [skip ci] ([51eb5c9](https://github.com/belongnet/sdk/commit/51eb5c9))
+- Playground [skip ci] ([d9a15bd](https://github.com/belongnet/sdk/commit/d9a15bd))
+
+### 🏡 Chore
+
+- Ci [skip ci] ([df93c01](https://github.com/belongnet/sdk/commit/df93c01))
+- Ci ([7b1b0d2](https://github.com/belongnet/sdk/commit/7b1b0d2))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.0.1
 
 
