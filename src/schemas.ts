@@ -32,7 +32,7 @@ export const BelongPaymentEventDataSchema = v.variant('type', [
     }),
   }),
   v.object({
-    type: v.literal(PaymentEvent.PaymentCancelled),
+    type: v.literal(PaymentEvent.PaymentCanceled),
     payload: v.object({}),
   }),
 ])

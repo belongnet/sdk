@@ -7,5 +7,5 @@ export enum PaymentEvent {
   Loaded = 'loaded',
   PaymentSuccess = 'payment-success',
   PaymentError = 'payment-error',
-  PaymentCancelled = 'payment-cancelled',
+  PaymentCanceled = 'payment-canceled',
 }
