@@ -1,6 +1,6 @@
 # @belongnet/sdk
 
-A JavaScript SDK for integrating with [Belong.net](https://belong.net)
+JavaScript SDK for integrating with Belong.net widget for seamless payment implementation on your website or application frontend.
 
 [![Version](https://img.shields.io/npm/v/@belongnet/sdk)](https://www.npmjs.com/@belongnet/sdk)
 
@@ -56,7 +56,8 @@ createPaymentFrame({
 
 ### Event listeners:
 
-You can listen to the events from the payment frame.
+To determine the outcome of a payment (success or failure and etc), you can set up event listeners that listen to events from the payment frame.
+We provide `isPaymentEvent` utility to help identify payment-related events.
 
 ```ts
 import { isPaymentEvent } from '@belongnet/sdk'
@@ -65,23 +66,27 @@ function handlePayment(e: MessageEvent) {
   if (isPaymentEvent(e)) {
     switch (e.data.type) {
       case 'payment-success':
+        // logic for successful payment
         console.log('payment-success', e.data.payload.link)
         break
       case 'payment-error':
+        // logic for payment error
         console.log('payment-error', e.data.payload)
         break
     }
   }
 }
 
-// add event listener
+// Add the event listener to listen for messages from the payment frame:
 window.addEventListener('message', handlePayment)
 
-// don't forget to remove the event listener
+// Remove the event listener when it is no longer needed to avoid potential memory leaks
 function onUnmount() {
   window.removeEventListener('message', handlePayment)
 }
 ```
+
+This method makes sure your app reacts well to payment events, giving users a smooth experience even if payments fail. But it's only for showing visual changes on the frontend. For safer payments, you need server-side processing with the API too.
 
 ## API
 
