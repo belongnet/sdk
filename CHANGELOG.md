@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.4
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.3...v0.1.4)
+
+### 🩹 Fixes
+
+- Typo PaymentCanceled ([8e80178](https://github.com/belongnet/sdk/commit/8e80178))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.1.3
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.1.2...v0.1.3)
