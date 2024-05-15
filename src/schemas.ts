@@ -31,6 +31,10 @@ export const BelongPaymentEventDataSchema = v.variant('type', [
       error: v.string(),
     }),
   }),
+  v.object({
+    type: v.literal(PaymentEvent.PaymentCancelled),
+    payload: v.object({}),
+  }),
 ])
 
 export const BelongPaymentEventSchema = v.object({

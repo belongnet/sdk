@@ -102,6 +102,11 @@ Checks if the provided event is a Belong payment event.
 - **Type**: `string`
 - **Default**: `"loaded"`
 
+#### `PaymentCancelled`
+
+- **Type**: `string`
+- **Default**: `"payment-cancelled"`
+
 #### `PaymentError`
 
 - **Type**: `string`
