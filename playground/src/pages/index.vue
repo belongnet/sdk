@@ -11,9 +11,9 @@ import {
   type Options,
   createPaymentFrame,
   PaymentTarget,
-  isBelongPaymentEvent,
+  isPaymentEvent,
   PaymentEvent,
-  BelongPaymentEventData,
+  PaymentEventData,
 } from '@belongnet/sdk'
 import { useDark, useClipboard, useColorMode, useCycleList } from '@vueuse/core'
 import isMongoId from 'validator/es/lib/isMongoId'
@@ -111,10 +111,15 @@ function generatePaymentFrame() {
 }
 
 function handlePayment(e: MessageEvent) {
-  if (isBelongPaymentEvent(e)) {
+  if (isPaymentEvent(e)) {
     let title = ''
 
     switch (e.data.type) {
+      case PaymentEvent.PaymentCanceled:
+        console.log('payment-canceled', e.data.payload)
+        title = 'Payment Canceled'
+        break
+
       case PaymentEvent.PaymentSuccess:
         console.log('payment-success', e.data.payload.link)
         title = 'Payment Success'
@@ -137,7 +142,7 @@ function handlePayment(e: MessageEvent) {
   }
 }
 
-function postPaymentEvent(e: BelongPaymentEventData) {
+function postPaymentEvent(e: PaymentEventData) {
   window.parent?.postMessage(e, '*')
 }
 

@@ -4,7 +4,7 @@ A JavaScript SDK for integrating with [Belong.net](https://belong.net)
 
 [![Version](https://img.shields.io/npm/v/@belongnet/sdk)](https://www.npmjs.com/@belongnet/sdk)
 
-- [👀 Demo online constructor](https://belongnet.github.io/sdk/) 
+- [👀 Demo online constructor](https://belongnet.github.io/sdk/)
 
 ## Installation
 
@@ -59,10 +59,10 @@ createPaymentFrame({
 You can listen to the events from the payment frame.
 
 ```ts
-import { isBelongPaymentEvent } from '@belongnet/sdk'
+import { isPaymentEvent } from '@belongnet/sdk'
 
 function handlePayment(e: MessageEvent) {
-  if (isBelongPaymentEvent(e)) {
+  if (isPaymentEvent(e)) {
     switch (e.data.type) {
       case 'payment-success':
         console.log('payment-success', e.data.payload.link)
@@ -91,7 +91,7 @@ function onUnmount() {
 
 Creates a payment frame for embedding payment forms.
 
-### `isBelongPaymentEvent(event)`
+### `isPaymentEvent(event)`
 
 Checks if the provided event is a Belong payment event.
 
@@ -128,6 +128,14 @@ Checks if the provided event is a Belong payment event.
 
 - **Type**: `string`
 - **Default**: `"hub-minting"`
+
+### `validateEvent(data)`
+
+Validates the provided payment event data.
+
+### `validateParams(params)`
+
+Validates the provided parameters.
 
 <!-- /automd -->
 

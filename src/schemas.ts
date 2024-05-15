@@ -14,7 +14,7 @@ export const ParamsSchema = v.variant('target', [
   }),
 ])
 
-export const BelongPaymentEventDataSchema = v.variant('type', [
+export const PaymentEventDataSchema = v.variant('type', [
   v.object({
     type: v.literal(PaymentEvent.Loaded),
     payload: v.object({}),
@@ -37,8 +37,8 @@ export const BelongPaymentEventDataSchema = v.variant('type', [
   }),
 ])
 
-export const BelongPaymentEventSchema = v.object({
-  data: BelongPaymentEventDataSchema,
+export const PaymentEventSchema = v.object({
+  data: PaymentEventDataSchema,
   //origin: v.string(),
   //source: v.literal('belong_payment'),
 })

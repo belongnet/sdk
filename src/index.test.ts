@@ -8,6 +8,8 @@ test('exports', () => {
   "createPaymentFrame",
   "PaymentTarget",
   "PaymentEvent",
-  "isBelongPaymentEvent",
+  "isPaymentEvent",
+  "validateEvent",
+  "validateParams",
 ]`)
 })

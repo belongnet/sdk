@@ -1,6 +1,10 @@
 import * as v from 'valibot'
-import { ParamsSchema, BelongPaymentEventSchema } from './schemas.js'
-import type { BelongPaymentEventData, Params } from './types.js'
+import {
+  ParamsSchema,
+  PaymentEventDataSchema,
+  PaymentEventSchema,
+} from './schemas.js'
+import type { PaymentEventData, Params } from './types.js'
 import queryString from 'query-string'
 
 const APP_LINK = 'https://app.belong.net'
@@ -82,9 +86,27 @@ export function mountPaymentFrame({
  * @param event - The event to check.
  * @returns `true` if the event is a Belong payment event, otherwise `false`.
  */
-export function isBelongPaymentEvent(
+export function isPaymentEvent(
   event: MessageEvent
-): event is MessageEvent<BelongPaymentEventData> {
-  const result = v.safeParse(BelongPaymentEventSchema, event)
+): event is MessageEvent<PaymentEventData> {
+  const result = v.safeParse(PaymentEventSchema, event)
   return result.success
+}
+
+/**
+ * Validates the provided parameters.
+ * @throws {Error} If the parameters are invalid.
+ */
+export function validateParams(params: Params): Params | never {
+  return v.parse(ParamsSchema, params)
+}
+
+/**
+ * Validates the provided payment event data.
+ * @throws {Error} If the data is invalid.
+ */
+export function validateEvent(
+  data: PaymentEventData
+): PaymentEventData | never {
+  return v.parse(PaymentEventDataSchema, data)
 }

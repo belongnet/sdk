@@ -1,13 +1,13 @@
 import type { Output } from 'valibot'
 import {
-  BelongPaymentEventDataSchema,
-  BelongPaymentEventSchema,
+  PaymentEventDataSchema,
+  PaymentEventSchema,
   ParamsSchema,
 } from './schemas.js'
 
 export type Params = Output<typeof ParamsSchema>
-export type BelongPaymentEventData = Output<typeof BelongPaymentEventDataSchema>
-export type BelongPaymentEvent = Output<typeof BelongPaymentEventSchema>
+export type PaymentEventData = Output<typeof PaymentEventDataSchema>
+export type PaymentEvent = Output<typeof PaymentEventSchema>
 
 /**
  * The options for configuring the payment frame.
