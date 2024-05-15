@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.5
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.4...v0.1.5)
+
+### 🚀 Enhancements
+
+- ValidateParams, validateEvent, better naming ([b44c14a](https://github.com/belongnet/sdk/commit/b44c14a))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.1.4
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.1.3...v0.1.4)
