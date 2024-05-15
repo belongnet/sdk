@@ -1,6 +1,33 @@
 # Changelog
 
 
+## v0.1.2
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.1...v0.1.2)
+
+### 🩹 Fixes
+
+- **play:** Title/favicon ([7885a67](https://github.com/belongnet/sdk/commit/7885a67))
+- **play:** Router ([db4e70a](https://github.com/belongnet/sdk/commit/db4e70a))
+- **play:** Add auto mode ([fd38b12](https://github.com/belongnet/sdk/commit/fd38b12))
+
+### 💅 Refactors
+
+- Remove unused `postPaymentEvent` ([bd81e2d](https://github.com/belongnet/sdk/commit/bd81e2d))
+
+### 📖 Documentation
+
+- Docgen ([8504980](https://github.com/belongnet/sdk/commit/8504980))
+
+### 🏡 Chore
+
+- Docs [skip ci] ([d5876ed](https://github.com/belongnet/sdk/commit/d5876ed))
+- Ci [skip ci] ([fd291b1](https://github.com/belongnet/sdk/commit/fd291b1))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.1.1
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.0.1...v0.1.1)
