@@ -124,10 +124,6 @@ Checks if the provided event is a Belong payment event.
 - **Type**: `string`
 - **Default**: `"hub-minting"`
 
-### `postPaymentEvent(data)`
-
-Sends a message to the parent window.
-
 <!-- /automd -->
 
 ## License
