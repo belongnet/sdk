@@ -12,8 +12,8 @@ import {
   createPaymentFrame,
   PaymentTarget,
   isBelongPaymentEvent,
-  postPaymentEvent,
   PaymentEvent,
+  BelongPaymentEventData,
 } from '@belongnet/sdk'
 import { useDark, useClipboard, useColorMode, useCycleList } from '@vueuse/core'
 import isMongoId from 'validator/es/lib/isMongoId'
@@ -135,6 +135,10 @@ function handlePayment(e: MessageEvent) {
       closeButton: true,
     })
   }
+}
+
+function postPaymentEvent(e: BelongPaymentEventData) {
+  window.parent?.postMessage(e, '*')
 }
 
 function showSampleMessage() {

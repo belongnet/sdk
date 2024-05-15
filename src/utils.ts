@@ -88,10 +88,3 @@ export function isBelongPaymentEvent(
   const result = v.safeParse(BelongPaymentEventSchema, event)
   return result.success
 }
-
-/**
- * Sends a message to the parent window.
- */
-export function postPaymentEvent(data: BelongPaymentEventData) {
-  window.parent.postMessage(data, '*')
-}
