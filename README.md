@@ -30,13 +30,17 @@ import { createPaymentFrame } from '@belongnet/sdk'
 
 #### CDN:
 
-add to the bottom of your HTML file with the following content.
+To load scripts as modules, it's recommended to use [esm.sh](https://esm.sh/). Add this to the bottom of your HTML file:
 
 ```html
 <script type="module">
-  import { createPaymentFrame } from 'https://esm.sh/@belongnet/sdk'
+  import { createPaymentFrame } from 'https://esm.sh/@belongnet/sdk@0.1.5'
 </script>
 ```
+
+> **Note:** Pin the version number to avoid breaking changes in production.
+
+You can also try [jsDelivr](https://www.jsdelivr.com/) or [unpkg](https://unpkg.com/), but they haven't been tested.
 
 #### Usage:
 

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div id="app">
+    <section>
+      <button type="button" class="event-button" data-target="event-ticket" data-event-id="66c2fa3c2cd6db830d22b49e">
+        Event base
+      </button>
+      <button type="button" class="event-button" data-target="event-ticket" data-event-id="66c32f902cd6db830d22b4ed">
+        Event Vip
+      </button>
+    </section>
+
+    <section style="flex:1">
+      <div id="frame-container"></div>
+    </section>
+  </div>
+
+  <style>
+    #frame-container {
+      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script type="module">
+    import { createPaymentFrame } from 'https://esm.sh/@belongnet/sdk@0.1.5'
+
+    const FRAME_CONTAINER = document.getElementById('frame-container')
+
+    // add button's click event
+    document
+      .querySelectorAll('.event-button')
+      .forEach((btn) => btn.addEventListener('click', onButtonClick))
+
+    // function to handle button click
+    function onButtonClick(e) {
+      const btn = e.target
+
+      createPaymentFrame({
+        el: FRAME_CONTAINER,
+        params: {
+          target: btn.dataset.target,
+          hubId: btn.dataset.eventId,
+          eventId: btn.dataset.eventId,
+        },
+      })
+    }
+  </script>
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
