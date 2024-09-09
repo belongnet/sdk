@@ -10,6 +10,7 @@ const isDark = useDark()
     :theme="isDark ? 'dark' : 'light'"
     :visible-toasts="5"
     position="bottom-left"
+    richColors
   />
   <router-view />
 </template>

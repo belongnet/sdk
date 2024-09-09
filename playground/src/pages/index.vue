@@ -13,7 +13,6 @@ import {
   PaymentTarget,
   isPaymentEvent,
   PaymentEvent,
-  PaymentEventData,
 } from '@belongnet/sdk'
 import { useDark, useClipboard, useColorMode, useCycleList } from '@vueuse/core'
 import isMongoId from 'validator/es/lib/isMongoId'
@@ -39,13 +38,16 @@ const hash = useRouteHash()
 const { copy } = useClipboard()
 const { highlighter } = usehighlighter()
 
-const state = ref<Options>({
+const defaultState = {
   origin: undefined,
   params: {
     target: PaymentTarget.EventTicket,
     eventId: '65cca181e81ea188206cf1dc',
+    coupon: '',
   },
-})
+} as const
+
+const state = ref<Options>({ ...defaultState })
 
 watchEffect(() => {
   hash.value = '#' + toHash(state.value)
@@ -57,7 +59,10 @@ function initFromHash() {
   try {
     const v = fromHash<Options>(hash.value.slice(1))
     if (v) {
-      state.value = v
+      state.value = {
+        ...state.value,
+        ...v,
+      }
     }
   } catch (e) {}
 }
@@ -70,12 +75,14 @@ function isCorrectId(id: string) {
 
 const paramsToCode = computed(() => {
   const p = toValue(state.value.params)
+
   const result =
     p.target === PaymentTarget.EventTicket
       ? {
           target: p.target,
           key: p?.key,
           eventId: p.eventId,
+          coupon: p?.coupon,
         }
       : {
           target: p.target,
@@ -84,6 +91,7 @@ const paramsToCode = computed(() => {
         }
   return result
 })
+
 function generatePaymentFrame() {
   errors.value = undefined
 
@@ -112,47 +120,29 @@ function generatePaymentFrame() {
 
 function handlePayment(e: MessageEvent) {
   if (isPaymentEvent(e)) {
-    let title = ''
+    let type: keyof typeof toast = 'message'
 
     switch (e.data.type) {
       case PaymentEvent.PaymentCanceled:
-        console.log('payment-canceled', e.data.payload)
-        title = 'Payment Canceled'
+        type = 'error'
         break
 
       case PaymentEvent.PaymentSuccess:
-        console.log('payment-success', e.data.payload.link)
-        title = 'Payment Success'
+        type = 'success'
         break
       case PaymentEvent.PaymentError:
-        console.log('payment-error', e.data.payload)
-        title = 'Payment Error'
+        type = 'error'
         break
       case PaymentEvent.Loaded:
-        console.log('payment-loaded', e.data.payload)
-        title = 'Payment Loaded (Simulated postMessage)'
+        type = 'info'
         break
     }
 
-    toast.message(title, {
-      description: JSON.stringify(e.data.payload, null, 2),
+    toast[type](e.data.payload?.message, {
       duration: Infinity,
       closeButton: true,
     })
   }
-}
-
-function postPaymentEvent(e: PaymentEventData) {
-  window.parent?.postMessage(e, '*')
-}
-
-function showSampleMessage() {
-  postPaymentEvent({
-    type: PaymentEvent.Loaded,
-    payload: {
-      msg: 'Payment Frame is loaded',
-    },
-  })
 }
 
 onBeforeUnmount(() => {
@@ -160,7 +150,6 @@ onBeforeUnmount(() => {
 })
 
 onMounted(() => {
-  showSampleMessage()
   window.addEventListener('message', handlePayment)
   generatePaymentFrame()
 
@@ -291,15 +280,37 @@ const htmlCode = computed(() => {
                     : (state.params.key = undefined)
                 "
               />
-              <label for="private_key">Use private key</label>
+              <label for="private_key">Private</label>
             </div>
-            <input
-              v-if="state.params.key !== undefined"
-              type="text"
-              v-model="state.params.key"
-              placeholder="Enter Key..."
-              maxlength="50"
-            />
+
+            <div v-if="state.params.key !== undefined">
+              <h5>Key:</h5>
+              <div>
+                <input
+                  type="text"
+                  v-model="state.params.key"
+                  placeholder="Enter Key..."
+                  maxlength="50"
+                />
+              </div>
+
+              <h5>Coupon:</h5>
+              <div>
+                <input
+                  type="text"
+                  :value="'coupon' in state.params ? state.params.coupon : ''"
+                  @input="
+                    Object.assign(state.params, {
+                      coupon: $event.target?.value,
+                      key: $event.target?.value,
+                    })
+                  "
+                  placeholder="Enter coupon..."
+                  maxlength="50"
+                />
+                <p>If you enter a coupon, it must match the private key.</p>
+              </div>
+            </div>
           </section>
 
           <section class="flex flex-col gap-2">
@@ -395,6 +406,9 @@ h4 {
   & + input {
     @apply mt-2;
   }
+}
+h5 {
+  @apply text-base font-semibold;
 }
 input[type='radio'],
 input[type='checkbox'] {
