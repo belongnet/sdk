@@ -1,12 +1,7 @@
 import type { Options } from './types.js'
-import {
-  FRAME_DATA_HASH_KEY,
-  createFrame,
-  generatePaymentUrl,
-  getCurrentFrame,
-  mountPaymentFrame,
-} from './utils.js'
-import { hash as toHash } from 'ohash'
+import { createFrame, generatePaymentUrl, mountFrame } from './utils.js'
+
+const frameMap = new WeakMap<HTMLElement, HTMLIFrameElement>()
 
 /**
  * Creates a payment frame for embedding payment forms.
@@ -17,26 +12,31 @@ import { hash as toHash } from 'ohash'
 export function createPaymentFrame(options: Options) {
   const { origin, params, el } = options
 
-  const hash = toHash(options)
-  let currentFrame: HTMLIFrameElement | null = null
-
-  if (el) {
-    currentFrame = getCurrentFrame(el)
-    const currentHash = currentFrame?.getAttribute(
-      'data-' + FRAME_DATA_HASH_KEY
-    )
-    if (hash === currentHash) {
-      console.log('reusing frame')
-      return currentFrame
-    }
+  if (!el) {
+    throw new Error('Container element (el) must be provided')
   }
 
   const url = generatePaymentUrl(params, origin)
-  let frame = createFrame({ url, hash })
+  let frame = frameMap.get(el)
 
-  // Automatically mount is el is provided
-  if (el) {
-    frame = mountPaymentFrame({ el, frame, currentFrame })
+  if (frame) {
+    if (frame.src === url) {
+      console.log('Reusing existing frame')
+      return frame
+    }
+
+    // Update URL is changed
+    frame.src = url
+  } else {
+    // Create frame if not exists
+    frame = createFrame({ url })
+    frameMap.set(el, frame)
+    console.log('Creating new frame')
+  }
+
+  // Only remount the frame if it's not already in the container
+  if (!el.contains(frame)) {
+    mountFrame(el, frame)
   }
 
   return frame

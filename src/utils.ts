@@ -5,28 +5,31 @@ import {
   PaymentEventSchema,
 } from './schemas.js'
 import type { PaymentEventData, Params } from './types.js'
-import queryString from 'query-string'
 
 const APP_LINK = 'https://app.belong.net'
-export const FRAME_DATA_HASH_KEY = 'belongnet-sdk'
+
+function stringifyUrl(url: string, query: Record<string, string>) {
+  let params = new URLSearchParams(query)
+
+  for (let [key, value] of params.entries()) {
+    if (value === null || value === '') {
+      params.delete(key)
+    }
+  }
+
+  url += '?' + params.toString()
+  return url
+}
 
 /**
  * Generates a payment URL based on the provided environment and checkout parameters.
  */
 export function generatePaymentUrl(params: Params, origin: string = APP_LINK) {
   const query = v.parse(ParamsSchema, params)
-
   const base = v.parse(v.string([v.url()]), origin)
 
-  const url = queryString.stringifyUrl(
-    { url: base + '/payments', query },
-    {
-      skipEmptyString: true,
-      skipNull: true,
-    }
-  )
-
-  return url.toString()
+  const url = stringifyUrl(base + '/payments', query)
+  return url
 }
 
 // export function generateSiteUrl(
@@ -39,7 +42,7 @@ export function generatePaymentUrl(params: Params, origin: string = APP_LINK) {
 /**
  * Creates an iframe element with the provided URL.
  */
-export function createFrame(data: { url: string; hash: string }) {
+export function createFrame(data: { url: string }) {
   const frame = document.createElement('iframe')
 
   Object.assign(frame, {
@@ -49,36 +52,19 @@ export function createFrame(data: { url: string; hash: string }) {
     src: data.url,
   })
 
-  frame.setAttribute('data-' + FRAME_DATA_HASH_KEY, data.hash)
-
   return frame
-}
-
-export function getCurrentFrame(el?: HTMLElement) {
-  const frame = el?.querySelector('iframe[data-' + FRAME_DATA_HASH_KEY + ']')
-  return frame && frame instanceof HTMLIFrameElement ? frame : null
 }
 
 /**
  * Mounts the provided iframe element to the provided element.
  */
-export function mountPaymentFrame({
-  el,
-  frame,
-  currentFrame,
-}: {
-  el: HTMLElement
-  frame: HTMLIFrameElement
-  currentFrame?: HTMLIFrameElement | null
-}) {
-  if (currentFrame) {
-    el.removeChild(currentFrame)
-  }
+export function mountFrame(el: HTMLElement, frame: HTMLIFrameElement) {
+  // already mounted
+  if (el.firstChild === frame) return
 
-  // Append the frame to the provided element
+  // clears the container
+  el.innerHTML = ''
   el.appendChild(frame)
-
-  return frame
 }
 
 /**

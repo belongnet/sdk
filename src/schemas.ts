@@ -6,6 +6,7 @@ export const ParamsSchema = v.variant('target', [
     target: v.literal(PaymentTarget.EventTicket),
     eventId: v.string(),
     key: v.optional(v.string()),
+    coupon: v.optional(v.string()),
   }),
   v.object({
     target: v.literal(PaymentTarget.HubMinting),
@@ -17,23 +18,29 @@ export const ParamsSchema = v.variant('target', [
 export const PaymentEventDataSchema = v.variant('type', [
   v.object({
     type: v.literal(PaymentEvent.Loaded),
-    payload: v.object({}),
+    payload: v.object({
+      message: v.string(),
+    }),
   }),
   v.object({
     type: v.literal(PaymentEvent.PaymentSuccess),
     payload: v.object({
       link: v.string(),
+      message: v.string(),
     }),
   }),
   v.object({
     type: v.literal(PaymentEvent.PaymentError),
     payload: v.object({
+      message: v.string(),
       error: v.string(),
     }),
   }),
   v.object({
     type: v.literal(PaymentEvent.PaymentCanceled),
-    payload: v.object({}),
+    payload: v.object({
+      message: v.string(),
+    }),
   }),
 ])
 

@@ -14,7 +14,8 @@
     "sourceMap": true,
     "lib": [
       "ES2022",
-      "DOM"
+      "DOM",
+      "dom.iterable"
     ],
     "verbatimModuleSyntax": true
   },
