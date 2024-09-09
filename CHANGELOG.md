@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.1.6
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.5...v0.1.6)
+
+### 💅 Refactors
+
+- Add vanilla example ([5de2c7e](https://github.com/belongnet/sdk/commit/5de2c7e))
+- **playground:** Add `coupon` supports ([0535e95](https://github.com/belongnet/sdk/commit/0535e95))
+- Optimize frame logic and remove deps ([1c4fefa](https://github.com/belongnet/sdk/commit/1c4fefa))
+
+### 📖 Documentation
+
+- Improve description ([cf85a7b](https://github.com/belongnet/sdk/commit/cf85a7b))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.1.5
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.1.4...v0.1.5)
