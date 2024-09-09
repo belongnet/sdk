@@ -49,6 +49,20 @@ const defaultState = {
 
 const state = ref<Options>({ ...defaultState })
 
+function setCoupon(e: Event) {
+  if (state.value.params.target !== PaymentTarget.EventTicket) return
+  const coupon = (e.target as HTMLInputElement).value
+
+  state.value = {
+    ...state.value,
+    params: {
+      ...state.value.params,
+      key: coupon,
+      coupon,
+    },
+  }
+}
+
 watchEffect(() => {
   hash.value = '#' + toHash(state.value)
 })
@@ -283,7 +297,7 @@ const htmlCode = computed(() => {
               <label for="private_key">Private</label>
             </div>
 
-            <div v-if="state.params.key !== undefined">
+            <template v-if="state.params.key !== undefined">
               <h5>Key:</h5>
               <div>
                 <input
@@ -294,23 +308,22 @@ const htmlCode = computed(() => {
                 />
               </div>
 
-              <h5>Coupon:</h5>
-              <div>
-                <input
-                  type="text"
-                  :value="'coupon' in state.params ? state.params.coupon : ''"
-                  @input="
-                    Object.assign(state.params, {
-                      coupon: $event.target?.value,
-                      key: $event.target?.value,
-                    })
-                  "
-                  placeholder="Enter coupon..."
-                  maxlength="50"
-                />
-                <p>If you enter a coupon, it must match the private key.</p>
-              </div>
-            </div>
+              <template
+                v-if="state.params.target === PaymentTarget.EventTicket"
+              >
+                <h5>Coupon:</h5>
+                <div>
+                  <input
+                    type="text"
+                    :value="'coupon' in state.params ? state.params.coupon : ''"
+                    @input="setCoupon"
+                    placeholder="Enter coupon..."
+                    maxlength="50"
+                  />
+                  <p>If you enter a coupon, it must match the private key.</p>
+                </div>
+              </template>
+            </template>
           </section>
 
           <section class="flex flex-col gap-2">
