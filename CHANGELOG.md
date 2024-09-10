@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.7
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.6...v0.1.7)
+
+### 💅 Refactors
+
+- **playground:** Fix build ([9952323](https://github.com/belongnet/sdk/commit/9952323))
+- **playground:** Fix input ([ef15e4f](https://github.com/belongnet/sdk/commit/ef15e4f))
+- **lib:** Update createPaymentFrame return data ([578905d](https://github.com/belongnet/sdk/commit/578905d))
+- **lib:** Optimize URL query string generation ([ca87869](https://github.com/belongnet/sdk/commit/ca87869))
+- **playground:** Add URL field ([91a761f](https://github.com/belongnet/sdk/commit/91a761f))
+
+### ❤️ Contributors
+
+- Reslear <reslear@gmail.com>
+
 ## v0.1.6
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.1.5...v0.1.6)
