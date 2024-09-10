@@ -100,6 +100,19 @@ This method makes sure your app reacts well to payment events, giving users a sm
 
 Creates a payment frame for embedding payment forms.
 
+**Example:**
+
+```js
+const { frame, url } = createPaymentFrame({
+  el: document.getElementById('payment-frame'),
+  origin: 'https://example.com',
+  params: {
+    target: 'event-ticket',
+    eventId: 'f9b2ea4c7be71407fcb6ed2c',
+  },
+})
+```
+
 ### `isPaymentEvent(event)`
 
 Checks if the provided event is a Belong payment event.

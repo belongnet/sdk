@@ -6,7 +6,21 @@ const frameMap = new WeakMap<HTMLElement, HTMLIFrameElement>()
 /**
  * Creates a payment frame for embedding payment forms.
  * @param options - The options for configuring the payment frame.
- * @returns The created payment frame.
+ *
+ * @returns
+ * - `frame` - The iframe element.
+ * - `url` - The URL of the payment frame.
+ *
+ * @example
+ * ```js
+ * const { frame, url } = createPaymentFrame({
+ *   el: document.getElementById('payment-frame'),
+ *   origin: 'https://example.com',
+ *   params: {
+ *     target: 'event-ticket',
+ *     eventId: 'f9b2ea4c7be71407fcb6ed2c',
+ *   },
+ * })
  * ```
  */
 export function createPaymentFrame(options: Options) {
@@ -22,7 +36,10 @@ export function createPaymentFrame(options: Options) {
   if (frame) {
     if (frame.src === url) {
       console.log('Reusing existing frame')
-      return frame
+      return {
+        frame,
+        url,
+      }
     }
 
     // Update URL is changed
@@ -41,8 +58,6 @@ export function createPaymentFrame(options: Options) {
 
   return {
     frame,
-    origin,
-    params,
     url,
   }
 }
