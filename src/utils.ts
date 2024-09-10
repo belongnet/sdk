@@ -9,15 +9,16 @@ import type { PaymentEventData, Params } from './types.js'
 const APP_LINK = 'https://app.belong.net'
 
 function stringifyUrl(url: string, query: Record<string, string>) {
-  let params = new URLSearchParams(query)
+  const _query = Object.fromEntries(
+    Object.entries(query).filter(
+      ([key, value]) =>
+        ![undefined, null, '', 'undefined', 'null'].includes(value)
+    )
+  )
 
-  for (let [key, value] of params.entries()) {
-    if (value === null || value === '') {
-      params.delete(key)
-    }
-  }
-
+  let params = new URLSearchParams(_query)
   url += '?' + params.toString()
+
   return url
 }
 
