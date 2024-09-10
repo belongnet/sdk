@@ -122,6 +122,8 @@ const paramsToCode = computed(() => {
   return result
 })
 
+const paymentFrame = ref()
+
 function generatePaymentFrame() {
   errors.value = undefined
 
@@ -134,11 +136,12 @@ function generatePaymentFrame() {
       (p.target === PaymentTarget.HubMinting && isCorrectId(p.hubId)))
   ) {
     try {
-      return createPaymentFrame({
+      const result = createPaymentFrame({
         el: belongPaymentRef.value,
         origin: state.value.origin,
         params: paramsToCode.value,
       })
+      paymentFrame.value = result
     } catch (e: any) {
       console.error(e)
       errors.value = e.message
@@ -373,17 +376,38 @@ const htmlCode = computed(() => {
           </button>
         </section>
 
-        <section>
-          <h3>Code:</h3>
-          <div class="code-container">
-            <button
-              title="Copy Code"
-              class="copy"
-              @click="copy(sourceHtmlCode)"
-            >
-              <Icon icon="ion:copy"></Icon>
-            </button>
-            <div v-html="htmlCode" class="code"></div>
+        <section class="flex flex-col gap-2">
+          <div v-if="paymentFrame?.url">
+            <h3>Url:</h3>
+            <div class="code-container">
+              <input
+                type="text"
+                :value="paymentFrame.url"
+                readonly
+                class="bg-white"
+              />
+              <a
+                title="Open in new tab"
+                class="button copy copy--input"
+                :href="paymentFrame.url"
+                target="_blank"
+              >
+                <Icon icon="ion:open"></Icon>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h3>Code:</h3>
+            <div class="code-container">
+              <button
+                title="Copy Code"
+                class="copy"
+                @click="copy(sourceHtmlCode)"
+              >
+                <Icon icon="ion:copy"></Icon>
+              </button>
+              <div v-html="htmlCode" class="code"></div>
+            </div>
           </div>
         </section>
       </section>
@@ -393,8 +417,7 @@ const htmlCode = computed(() => {
 
 <style>
 html.dark .shiki,
-html.dark .shiki span,
-input[type='text'] {
+html.dark .shiki span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
 }
@@ -409,7 +432,10 @@ input[type='text'] {
   }
 
   .copy {
-    @apply transition op-70 absolute flex items-center justify-center top-2 right-2 p-0 w-8 h-8 rounded-lg;
+    @apply transition op-80 absolute flex items-center justify-center top-2 right-2 p-0 w-8 h-8 rounded-lg;
+  }
+  .copy--input {
+    @apply top-0 bottom-0 right-0 m-auto right-1.5;
   }
 
   .code {
@@ -446,7 +472,8 @@ input[type='text'] {
   @apply w-full p-2 border border-gray-300 rounded-lg;
 }
 
-button {
+button,
+a.button {
   @apply border-0 bg-[length:200%_auto] bg-gradient-to-br from-yellow-400 via-purple-500 to-blue-400 text-white font-semibold text-base md:text-lg px-6 py-2 rounded-lg shadow-lg hover:scale-98 transform transition-transform duration-300 ease-in-out;
   animation: gradient_move 8s ease infinite;
 }
