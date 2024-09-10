@@ -39,5 +39,10 @@ export function createPaymentFrame(options: Options) {
     mountFrame(el, frame)
   }
 
-  return frame
+  return {
+    frame,
+    origin,
+    params,
+    url,
+  }
 }
