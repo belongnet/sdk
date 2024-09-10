@@ -43,7 +43,6 @@ const defaultState = {
   params: {
     target: PaymentTarget.EventTicket,
     eventId: '65cca181e81ea188206cf1dc',
-    coupon: '',
   },
 } as const
 
@@ -60,6 +59,23 @@ function setCoupon(e: Event) {
       key: coupon,
       coupon,
     },
+  }
+}
+
+function setPrivateKey(e: Event) {
+  const checked = (e.target as HTMLInputElement).checked
+
+  const params = {
+    ...state.value.params,
+  }
+
+  if (checked) params.key = ''
+  else delete params.key
+  if ('coupon' in params) delete params.coupon
+
+  state.value = {
+    ...state.value,
+    params,
   }
 }
 
@@ -288,11 +304,7 @@ const htmlCode = computed(() => {
                 id="private_key"
                 type="checkbox"
                 :checked="state.params.key !== undefined"
-                @change="
-                  ($event.target as HTMLInputElement).checked
-                    ? (state.params.key = '')
-                    : (state.params.key = undefined)
-                "
+                @change="setPrivateKey"
               />
               <label for="private_key">Private</label>
             </div>
