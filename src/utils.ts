@@ -27,7 +27,7 @@ function stringifyUrl(url: string, query: Record<string, string>) {
  */
 export function generatePaymentUrl(params: Params, origin: string = APP_LINK) {
   const query = v.parse(ParamsSchema, params)
-  const base = v.parse(v.string([v.url()]), origin)
+  const base = v.parse(v.pipe(v.string(), v.url()), origin)
 
   const url = stringifyUrl(base + '/payments', query)
   return url

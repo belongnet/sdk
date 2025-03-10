@@ -1,13 +1,13 @@
-import type { Output } from 'valibot'
+import type { InferOutput } from 'valibot'
 import {
   PaymentEventDataSchema,
   PaymentEventSchema,
   ParamsSchema,
 } from './schemas.js'
 
-export type Params = Output<typeof ParamsSchema>
-export type PaymentEventData = Output<typeof PaymentEventDataSchema>
-export type PaymentEvent = Output<typeof PaymentEventSchema>
+export type Params = InferOutput<typeof ParamsSchema>
+export type PaymentEventData = InferOutput<typeof PaymentEventDataSchema>
+export type PaymentEvent = InferOutput<typeof PaymentEventSchema>
 
 /**
  * The options for configuring the payment frame.
