@@ -43,6 +43,8 @@ const defaultState = {
   params: {
     target: PaymentTarget.EventTicket,
     eventId: '65cca181e81ea188206cf1dc',
+    hubId: undefined,
+    checkoutId: undefined,
   },
 } as const
 
@@ -69,8 +71,8 @@ function setPrivateKey(e: Event) {
     ...state.value.params,
   }
 
-  if (checked) params.key = ''
-  else delete params.key
+  if (checked && 'key' in params) params.key = ''
+  else if ('key' in params) delete params.key
   if ('coupon' in params) delete params.coupon
 
   state.value = {
@@ -106,20 +108,27 @@ function isCorrectId(id: string) {
 const paramsToCode = computed(() => {
   const p = toValue(state.value.params)
 
-  const result =
-    p.target === PaymentTarget.EventTicket
-      ? {
-          target: p.target,
-          key: p?.key,
-          eventId: p.eventId,
-          coupon: p?.coupon,
-        }
-      : {
-          target: p.target,
-          key: p?.key,
-          hubId: p.hubId,
-        }
-  return result
+  if (p.target === PaymentTarget.EventTicket) {
+    return {
+      target: p.target,
+      key: p?.key,
+      eventId: p.eventId,
+      coupon: p?.coupon,
+    }
+  }
+
+  if (p.target === PaymentTarget.HubMinting) {
+    return {
+      target: p.target,
+      hubId: p.hubId,
+    }
+  }
+
+  // Checkout target
+  return {
+    target: p.target,
+    checkoutId: p.checkoutId,
+  }
 })
 
 const paymentFrame = ref()
@@ -133,7 +142,8 @@ function generatePaymentFrame() {
     belongPaymentRef.value &&
     p.target &&
     ((p.target === PaymentTarget.EventTicket && isCorrectId(p.eventId)) ||
-      (p.target === PaymentTarget.HubMinting && isCorrectId(p.hubId)))
+      (p.target === PaymentTarget.HubMinting && isCorrectId(p.hubId)) ||
+      (p.target === PaymentTarget.Checkout && isCorrectId(p.checkoutId)))
   ) {
     try {
       const result = createPaymentFrame({
@@ -276,6 +286,13 @@ const htmlCode = computed(() => {
               v-model="state.params.target"
             />
             <label :for="PaymentTarget.HubMinting">Hub minting</label><br />
+            <input
+              type="radio"
+              :id="PaymentTarget.Checkout"
+              :value="PaymentTarget.Checkout"
+              v-model="state.params.target"
+            />
+            <label :for="PaymentTarget.Checkout">Checkout</label><br />
           </section>
           <section>
             <template v-if="state.params.target === PaymentTarget.EventTicket">
@@ -298,6 +315,16 @@ const htmlCode = computed(() => {
               />
             </template>
 
+            <template v-if="state.params.target === PaymentTarget.Checkout">
+              <h4>Checkout ID:</h4>
+              <input
+                type="text"
+                v-model="state.params.checkoutId"
+                placeholder="Checkout ID"
+                maxlength="50"
+              />
+            </template>
+
             <div>Enter correct <b>slug</b> or <b>id (ObjectId)</b></div>
           </section>
 
@@ -306,13 +333,16 @@ const htmlCode = computed(() => {
               <input
                 id="private_key"
                 type="checkbox"
-                :checked="state.params.key !== undefined"
+                :checked="
+                  state.params.target === PaymentTarget.EventTicket &&
+                  state.params.key !== undefined
+                "
                 @change="setPrivateKey"
               />
               <label for="private_key">Private</label>
             </div>
 
-            <template v-if="state.params.key !== undefined">
+            <template v-if="state.params.target === PaymentTarget.EventTicket">
               <h5>Key:</h5>
               <div>
                 <input
