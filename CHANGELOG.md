@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v0.1.9
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.8...v0.1.9)
+
+### 🚀 Enhancements
+
+- Init checkout ([7971188](https://github.com/belongnet/sdk/commit/7971188))
+
+### 💅 Refactors
+
+- Docs ([1561128](https://github.com/belongnet/sdk/commit/1561128))
+- Bump valibot v31+ ([6541a06](https://github.com/belongnet/sdk/commit/6541a06))
+
+### 🏡 Chore
+
+- Fix lock, deploy ([ed7705d](https://github.com/belongnet/sdk/commit/ed7705d))
+
+### ❤️ Contributors
+
+- Reslear ([@reslear](https://github.com/reslear))
+
 ## v0.1.8
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.1.7...v0.1.8)
