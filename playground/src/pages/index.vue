@@ -213,7 +213,7 @@ watchEffect(() => {
 
 const htmlCode = computed(() => {
   if (!sourceHtmlCode.value) return ''
-  return highlighter.codeToHtml(sourceHtmlCode.value, {
+  return highlighter.value?.codeToHtml(sourceHtmlCode.value, {
     lang: 'javascript',
     themes: {
       light: 'vitesse-light',
