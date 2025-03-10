@@ -44,14 +44,42 @@ You can also try [jsDelivr](https://www.jsdelivr.com/) or [unpkg](https://unpkg.
 
 #### Usage:
 
-Use in your project:
+The SDK supports several payment targets for different use cases:
 
+##### Event Ticket Payment
+Used for purchasing tickets to events. Requires an `eventId` to identify the specific event.
+```ts
+import { PaymentTarget } from '@belongnet/sdk'
+
+createPaymentFrame({
+  el: document.getElementById('belong-payment-frame'),
+  params: {
+    target: PaymentTarget.EventTicket,
+    eventId: '65f1c7a33e51d8e4c2a9b4d2',
+  },
+})
+```
+
+##### Hub Minting Payment
+Used for minting operations within a hub. Requires a `hubId` to identify the specific hub.
 ```ts
 createPaymentFrame({
   el: document.getElementById('belong-payment-frame'),
   params: {
-    target: 'event-ticket',
-    eventId: 'f9b2ea4c7be71407fcb6ed2c',
+    target: PaymentTarget.HubMinting,
+    hubId: '65f1c7b12f90ae7d31c8e5f1',
+  },
+})
+```
+
+##### Checkout Payment
+Used for general checkout operations. Requires a `checkoutId` to identify the specific checkout session.
+```ts
+createPaymentFrame({
+  el: document.getElementById('belong-payment-frame'),
+  params: {
+    target: PaymentTarget.Checkout,
+    checkoutId: '65f1c7c8d4a5b3e9f8c1d2e3',
   },
 })
 ```
@@ -103,12 +131,14 @@ Creates a payment frame for embedding payment forms.
 **Example:**
 
 ```js
+import { PaymentTarget } from '@belongnet/sdk'
+
 const { frame, url } = createPaymentFrame({
   el: document.getElementById('payment-frame'),
   origin: 'https://example.com',
   params: {
-    target: 'event-ticket',
-    eventId: 'f9b2ea4c7be71407fcb6ed2c',
+    target: PaymentTarget.EventTicket,
+    eventId: '65f1c7a33e51d8e4c2a9b4d2',
   },
 })
 ```
@@ -141,15 +171,25 @@ Checks if the provided event is a Belong payment event.
 
 ### `PaymentTarget`
 
+Available payment targets for different use cases:
+
 #### `EventTicket`
 
 - **Type**: `string`
 - **Default**: `"event-ticket"`
+- **Description**: Used for event ticket purchases. Requires `eventId` parameter.
 
 #### `HubMinting`
 
 - **Type**: `string`
 - **Default**: `"hub-minting"`
+- **Description**: Used for hub minting operations. Requires `hubId` parameter.
+
+#### `Checkout`
+
+- **Type**: `string`
+- **Default**: `"checkout"`
+- **Description**: Used for general checkout operations. Requires `checkoutId` parameter.
 
 ### `validateEvent(data)`
 
@@ -160,6 +200,32 @@ Validates the provided payment event data.
 Validates the provided parameters.
 
 <!-- /automd -->
+
+## Target Parameters Reference
+
+Each target requires specific parameters. Here's a detailed breakdown:
+
+### Event Ticket Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `target` | `PaymentTarget` | Must be `PaymentTarget.EventTicket` |
+| `eventId` | `string` | Unique identifier of the event (24 characters) |
+| `coupon` | `string` | Optional coupon code for discounts |
+
+### Hub Minting Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `target` | `PaymentTarget` | Must be `PaymentTarget.HubMinting` |
+| `hubId` | `string` | Unique identifier of the hub (24 characters) |
+
+### Checkout Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `target` | `PaymentTarget` | Must be `PaymentTarget.Checkout` |
+| `checkoutId` | `string` | Unique identifier of the checkout (24 characters) |
 
 ## License
 

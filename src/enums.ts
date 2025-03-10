@@ -1,6 +1,7 @@
 export enum PaymentTarget {
   EventTicket = 'event-ticket',
   HubMinting = 'hub-minting',
+  Checkout = 'checkout',
 }
 
 export enum PaymentEvent {
