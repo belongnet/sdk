@@ -21,10 +21,11 @@ import { Icon } from '@iconify/vue'
 import { useRouteHash } from '@vueuse/router'
 import { toast } from 'vue-sonner'
 import { formatCode } from '../formatter'
-import { highlighter } from '../hl'
 import { fromHash, toHash } from '../utils/hash'
+import { useHighlighter } from '../composables/useHighlighter'
 
 const belongPaymentRef = ref<HTMLElement | null>(null)
+const highlighter = useHighlighter()
 const isDark = useDark()
 const mode = useColorMode({
   emitAuto: true,
