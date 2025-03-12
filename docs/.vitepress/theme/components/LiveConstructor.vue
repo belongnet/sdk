@@ -229,7 +229,7 @@ const htmlCode = computed(() => {
 
 <template>
 
-  <div class="paygen">
+  <div class="paygen gap-8 min-h-screen flex flex-col md:flex-row w-full mx-auto my-10">
 
     <section class="md:h-[80vh] flex-1">
       <div class="m-0! app-frame mac wireframe borderless scrolling h-full" :class="isDark ? 'dark' : ''"
@@ -358,8 +358,6 @@ html.dark .shiki span {
 } */
 
 .paygen {
-  @apply gap-8 min-h-screen flex flex-col md:flex-row w-full mx-auto my-10;
-
 
   button {
     margin: 0.6em;

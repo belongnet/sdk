@@ -53,10 +53,6 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Live Constructor',
-        items: [{ text: 'Overview', link: '/live-constructor/' }],
-      },
-      {
         text: 'NFT Checkout',
         items: [{ text: 'Checkout', link: '/nft-checkout/checkout' }],
       },
