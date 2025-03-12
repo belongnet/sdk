@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.1.10
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.9...v0.1.10)
+
+### 🚀 Enhancements
+
+- **docs:** Add vitepress ([83b6a62](https://github.com/belongnet/sdk/commit/83b6a62))
+- Add supports key for `hub` ([8152ddc](https://github.com/belongnet/sdk/commit/8152ddc))
+
+### 💅 Refactors
+
+- **playground:** Refactor app ([f301bfb](https://github.com/belongnet/sdk/commit/f301bfb))
+- **playground:** Fix shiki ([b0879b5](https://github.com/belongnet/sdk/commit/b0879b5))
+- **docs:** Migrate from playground ([c841fac](https://github.com/belongnet/sdk/commit/c841fac))
+
+### 🏡 Chore
+
+- Up lock ([191a5d4](https://github.com/belongnet/sdk/commit/191a5d4))
+- Bump deploy ([916026b](https://github.com/belongnet/sdk/commit/916026b))
+- Fix lock ([76cfcf9](https://github.com/belongnet/sdk/commit/76cfcf9))
+
+### ❤️ Contributors
+
+- Reslear ([@reslear](https://github.com/reslear))
+
 ## v0.1.9
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.1.8...v0.1.9)
