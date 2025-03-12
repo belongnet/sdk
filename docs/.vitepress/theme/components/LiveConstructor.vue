@@ -123,6 +123,7 @@ const paramsToCode = computed(() => {
     return {
       target: p.target,
       hubId: p.hubId,
+      key: p?.key,
     }
   }
 
@@ -272,13 +273,13 @@ const htmlCode = computed(() => {
 
         <section class="flex flex-col gap-2">
           <div>
-            <input id="private_key" type="checkbox" :checked="state.params.target === PaymentTarget.EventTicket &&
+            <input id="private_key" type="checkbox" :checked="state.params.target !== PaymentTarget.Checkout &&
               state.params.key !== undefined
               " @change="setPrivateKey" />
             <label for="private_key">Private</label>
           </div>
 
-          <template v-if="state.params.target === PaymentTarget.EventTicket">
+          <template v-if="state.params.target !== PaymentTarget.Checkout">
             <h5>Key:</h5>
             <div>
               <input type="text" v-model="state.params.key" placeholder="Enter Key..." maxlength="50" />
