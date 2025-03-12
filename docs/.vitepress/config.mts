@@ -1,7 +1,12 @@
 import { defineConfig } from 'vitepress'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  vue: {},
+  vite: {
+    plugins: [tailwindcss()],
+  },
   title: 'SDK Belong.net',
   description:
     'widget for seamless payment implementation on your website or application frontend',
@@ -16,6 +21,10 @@ export default defineConfig({
     },
   },
 
+  lastUpdated: true,
+
+  appearance: 'dark',
+
   themeConfig: {
     siteTitle: false,
     logo: {
@@ -26,6 +35,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Docs', link: '/overview' },
       /* { text: 'API Reference', link: '/api-reference' }, */
       {
         text: 'Belong.net',
@@ -37,9 +47,14 @@ export default defineConfig({
       {
         text: 'Introduction',
         items: [
+          { text: 'Overview', link: '/overview' },
           { text: 'Installation', link: '/installation' },
           { text: 'Get Status', link: '/get-status' },
         ],
+      },
+      {
+        text: 'Live Constructor',
+        items: [{ text: 'Overview', link: '/live-constructor/' }],
       },
       {
         text: 'NFT Checkout',

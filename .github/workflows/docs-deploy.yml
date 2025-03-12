@@ -8,7 +8,7 @@ on:
       - main
 
     paths:
-      - 'playground/**'
+      - 'docs/**'
       - '.github/workflows/docs-deploy.yml'
   workflow_dispatch:
 
@@ -40,12 +40,12 @@ jobs:
 
       - run: pnpm --filter @belongnet/sdk build
 
-      - run: pnpm --filter playground build --base /sdk/
+      - run: pnpm --filter docs docs:build --base /sdk/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./playground/dist
+          path: ./docs/.vitepress/dist
 
   deploy:
     needs: build

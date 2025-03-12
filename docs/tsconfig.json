@@ -23,10 +23,9 @@
     "noFallthroughCasesInSwitch": true,
   },
   "include": [
-    "./typed-router.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
+    ".vitepress/**/*.ts",
+    ".vitepress/**/*.tsx",
+    ".vitepress/**/*.vue"
   ],
   "references": [
     {

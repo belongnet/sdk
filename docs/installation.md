@@ -2,10 +2,6 @@
 
 JavaScript SDK for integrating with Belong.net widget for seamless payment implementation on your website or application frontend.
 
-[![Version](https://img.shields.io/npm/v/@belongnet/sdk)](https://www.npmjs.com/@belongnet/sdk)
-
-- [👀 Demo online constructor](https://belongnet.github.io/sdk/)
-
 ## Installation
 
 #### NPM:
@@ -232,15 +228,3 @@ Each target requires specific parameters. Here's a detailed breakdown:
 | ------------ | --------------- | ------------------------------------------------- |
 | `target`     | `PaymentTarget` | Must be `PaymentTarget.Checkout`                  |
 | `checkoutId` | `string`        | Unique identifier of the checkout (24 characters) |
-
-## License
-
-This project is licensed under the terms of the [MIT license](LICENSE).
-
-<!-- automd:with-automd -->
-
----
-
-_🤖 auto updated with [automd](https://automd.unjs.io)_
-
-<!-- /automd -->
