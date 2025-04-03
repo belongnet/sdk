@@ -1,4 +1,4 @@
----
+![image](https://github.com/user-attachments/assets/298723fe-a72e-4507-b3ce-3ae9075df1f9)---
 title: 'Create product collection'
 description: 'Create and launch a digital collection of Non-Fungible Tokens (NFTs) that represents unique products or digital assets'
 ---
@@ -187,7 +187,7 @@ Review all settings and click "Confirm & Finish" to create your smart contract.
 
 Confirm the network fee payment in MetaMask to deploy your contract.
 
-> ⚠️ This transaction requires ETH for gas fees.
+> ⚠️ This transaction requires native token (POL/ETH/BLAST etc) for gas fees.
 
 ![Pay Fee](/images/confirm_fee.jpg)
 
