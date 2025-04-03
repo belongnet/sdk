@@ -1,8 +1,3 @@
-![image](https://github.com/user-attachments/assets/298723fe-a72e-4507-b3ce-3ae9075df1f9)---
-title: 'Create product collection'
-description: 'Create and launch a digital collection of Non-Fungible Tokens (NFTs) that represents unique products or digital assets'
----
-
 # Create Product Collection
 
 This guide will walk you through the process of creating and launching your own NFT collection on Belong.net. By the end, you'll have:
