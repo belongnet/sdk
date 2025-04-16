@@ -101,7 +101,7 @@ function handlePayment(e: MessageEvent) {
     switch (e.data.type) {
       case 'payment-success':
         // logic for successful payment
-        console.log('payment-success', e.data.payload.link)
+        console.log('payment-success', e.data.payload)
         break
       case 'payment-error':
         // logic for payment error
@@ -228,3 +228,34 @@ Each target requires specific parameters. Here's a detailed breakdown:
 | ------------ | --------------- | ------------------------------------------------- |
 | `target`     | `PaymentTarget` | Must be `PaymentTarget.Checkout`                  |
 | `checkoutId` | `string`        | Unique identifier of the checkout (24 characters) |
+
+## Success Payload Structure
+
+When a payment is successful, the `e.data.payload` object will contain the following structure:
+
+```typescript
+{
+  address: Hex
+  hash?: Hex
+  block_number?: number
+  cryptoAddress: { address: Address }
+  total?: number
+  minted_price?: number
+  tokens: {
+    token_id: string
+    token_uri: string
+    price?: number
+    image?: string
+    name?: string
+    attributes?: NftAttributes[]
+    mediaData?: any
+    qrSerialNumber?: string
+  }[]
+}
+```
+
+Where:
+- `Hex` represents a hexadecimal string
+- `Address` represents a blockchain address
+- `NftAttributes` represents NFT metadata attributes
+- Fields marked with `?` are optional
