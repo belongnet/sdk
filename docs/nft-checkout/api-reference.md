@@ -19,13 +19,9 @@ interface PaymentParams {
   target: PaymentTarget // Payment target type
   checkoutId: string // Unique checkout identifier
   coupon?: string // Optional coupon code
-  email?: string // Email address (must be URL encoded if contains @)
   tokens?: TokenRequest[] // Optional token specifications
   theme?: ThemeOptions // Optional theme customization
 }
-
-// Note: When using email parameter, make sure to encode it using encodeURIComponent
-// Example: email: encodeURIComponent('test@email.com') // 'test%40email.com'
 
 interface TokenRequest {
   id: string // Token identifier

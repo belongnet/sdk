@@ -16,66 +16,6 @@ createPaymentFrame({
 })
 ```
 
-## URL Encoding
-
-When working with email addresses in URLs and JSON, be aware of proper encoding:
-
-### URL Parameters
-
-The `@` symbol needs to be encoded as `%40` in URLs:
-
-```typescript
-// Incorrect - will cause issues in URLs
-const email = 'test@email.com'
-
-// Correct - encode the email for URL usage
-const encodedEmail = encodeURIComponent('test@email.com') // results in 'test%40email.com'
-```
-
-### JSON Stringification
-
-When converting objects with email to JSON, you might want to preserve the @ symbol:
-
-```typescript
-const params = {
-  email: 'test@email.com',
-  // other params...
-}
-
-// Custom stringify function to preserve @ in email
-const stringifyWithEmailHandling = (obj: any) => {
-  const str = JSON.stringify(obj, null, 2)
-  return str.replace(/%40/g, '@')
-}
-
-// Use the custom function
-const jsonString = stringifyWithEmailHandling(params)
-```
-
-### Best Practices for Email Handling
-
-1. **URL Encoding**
-
-   ```typescript
-   const encodeEmail = (email: string) => encodeURIComponent(email)
-   ```
-
-2. **JSON Handling**
-
-   ```typescript
-   const stringifyWithEmail = (data: any) => {
-     return JSON.stringify(data, null, 2).replace(/%40/g, '@')
-   }
-   ```
-
-3. **Validation Helper**
-   ```typescript
-   const isValidEmail = (email: string) => {
-     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-     return emailRegex.test(email)
-   }
-   ```
-
 ## Security Considerations
 
 1. **Origin Validation**
@@ -161,25 +101,6 @@ function handlePaymentWithRetry(maxRetries = 3) {
   }
 
   attemptPayment()
-}
-```
-
-### Transaction Monitoring
-
-```typescript
-async function monitorTransaction(txHash: string) {
-  const maxAttempts = 10
-  let attempts = 0
-
-  while (attempts < maxAttempts) {
-    const status = await checkTransactionStatus(txHash)
-    if (status === 'confirmed') {
-      handleSuccess()
-      break
-    }
-    attempts++
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-  }
 }
 ```
 

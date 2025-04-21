@@ -24,23 +24,23 @@ x-api-key: YOUR_API_KEY  # Contact join@belong.net to get your API key
 
 ```json
 {
-  "collectionId": "67db3b9b895ace9183f6b1c6",
+  "collectionId": "65f1c7a33e51d8e4c2a9b4d2",
   "items": [
     {
-      "name": "Item 1",
-      "description": "Item 1 description",
-      "mintPrice": 0.3,
-      "image": "https://mushroomholistic.com/cdn/shop/files/DSC04554.jpg",
+      "name": "Test NFT #1",
+      "description": "Description for Test NFT #1",
+      "mintPrice": 0.1,
+      "image": "https://example.com/nft1.jpg",
       "quantity": 1,
-      "externalUrl": "https://mushroomholistic.com"
+      "externalUrl": "https://example.com/nft1"
     },
     {
-      "name": "Item 2",
-      "description": "Item 2 description",
+      "name": "Test NFT #2",
+      "description": "Description for Test NFT #2",
       "mintPrice": 0.2,
-      "image": "https://mushroomholistic.com/cdn/shop/files/9ae1ec563dbecc6ca3c7da5be22a88e9.jpg",
+      "image": "https://example.com/nft2.jpg",
       "quantity": 2,
-      "externalUrl": "https://mushroomholistic.com"
+      "externalUrl": "https://example.com/nft2"
     }
   ]
 }
@@ -61,9 +61,9 @@ x-api-key: YOUR_API_KEY  # Contact join@belong.net to get your API key
 
 ```json
 {
-  "checkoutId": "checkout_id_here",
-  "status": "pending",
-  "expiresAt": "2024-03-21T10:00:00Z"
+  "data": {
+    "checkoutId": "checkout_id_here"
+  }
 }
 ```
 
@@ -93,24 +93,24 @@ async function createNftCheckout() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': 'YOUR_API_KEY', // Contact join@belong.net to get your API key
+      'x-api-key': 'YOUR_API_KEY',
     },
     body: JSON.stringify({
-      collectionId: '67db3b9b895ace9183f6b1c6',
+      collectionId: '65f1c7a33e51d8e4c2a9b4d2',
       items: [
         {
-          name: 'Item 1',
-          description: 'Item 1 description',
-          mintPrice: 0.3,
-          image: 'https://mushroomholistic.com/cdn/shop/files/DSC04554.jpg',
+          name: 'Test NFT #1',
+          description: 'Description for Test NFT #1',
+          mintPrice: 0.1,
+          image: 'https://example.com/nft1.jpg',
           quantity: 1,
-          externalUrl: 'https://mushroomholistic.com',
+          externalUrl: 'https://example.com/nft1',
         },
       ],
     }),
   })
 
-  const data = await response.json()
+  const { data } = await response.json()
   return data.checkoutId
 }
 ```
@@ -124,26 +124,26 @@ async function createNftCheckout() {
   const { data } = await axios.post(
     'https://api.belong.net/api/v2/nft-checkout',
     {
-      collectionId: '67db3b9b895ace9183f6b1c6',
+      collectionId: '65f1c7a33e51d8e4c2a9b4d2',
       items: [
         {
-          name: 'Item 1',
-          description: 'Item 1 description',
-          mintPrice: 0.3,
-          image: 'https://mushroomholistic.com/cdn/shop/files/DSC04554.jpg',
+          name: 'Test NFT #1',
+          description: 'Description for Test NFT #1',
+          mintPrice: 0.1,
+          image: 'https://example.com/nft1.jpg',
           quantity: 1,
-          externalUrl: 'https://mushroomholistic.com',
+          externalUrl: 'https://example.com/nft1',
         },
       ],
     },
     {
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': 'YOUR_API_KEY', // Contact join@belong.net to get your API key
+        'x-api-key': 'YOUR_API_KEY',
       },
     }
   )
 
-  return data.checkoutId
+  return data.data.checkoutId
 }
 ```

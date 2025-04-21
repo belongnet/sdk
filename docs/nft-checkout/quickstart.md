@@ -33,21 +33,22 @@ async function createNftCheckout() {
       'x-api-key': 'YOUR_API_KEY',
     },
     body: JSON.stringify({
-      collectionId: 'your_collection_id',
+      collectionId: '65f1c7a33e51d8e4c2a9b4d2',
       items: [
         {
-          name: 'NFT Name',
-          description: 'NFT Description',
+          name: 'Test NFT #1',
+          description: 'Description for Test NFT #1',
           mintPrice: 0.1,
-          image: 'https://your-image-url.com/image.jpg',
+          image: 'https://example.com/nft1.jpg',
           quantity: 1,
+          externalUrl: 'https://example.com/nft1',
         },
       ],
     }),
   })
 
-  const data = await response.json()
-  return data.checkoutId
+  const { data } = await response.json()
+  return data.checkoutId // Response is wrapped in data object
 }
 ```
 
@@ -169,21 +170,22 @@ class NFTCheckout {
         'x-api-key': 'YOUR_API_KEY',
       },
       body: JSON.stringify({
-        collectionId: 'your_collection_id',
+        collectionId: '65f1c7a33e51d8e4c2a9b4d2',
         items: [
           {
-            name: 'NFT Name',
-            description: 'NFT Description',
+            name: 'Test NFT #1',
+            description: 'Description for Test NFT #1',
             mintPrice: 0.1,
-            image: 'https://your-image-url.com/image.jpg',
+            image: 'https://example.com/nft1.jpg',
             quantity: 1,
+            externalUrl: 'https://example.com/nft1',
           },
         ],
       }),
     })
 
-    const data = await response.json()
-    return data.checkoutId
+    const { data } = await response.json()
+    return data.checkoutId // Response is wrapped in data object
   }
 
   private createEventHandler() {
@@ -243,5 +245,6 @@ checkout.dispose()
 ## Next Steps
 
 - Learn more about [Event Handling](./events.md)
+- Check [Transaction Status](./checkout.md#getting-transaction-status) for monitoring your transactions
 - Explore [Advanced Topics](./advanced.md) for customization options
 - Check the [API Reference](./api-reference.md) for detailed documentation

@@ -23,16 +23,23 @@ Learn how to handle various events during the NFT checkout process.
   }
   total?: number                 // Total purchase amount
   minted_price?: number          // Price at which NFT was minted
-  tokens: {
-    token_id: string            // Unique identifier of the NFT
-    token_uri: string           // Metadata URI
-    price?: number              // Individual token price
-    image?: string              // NFT image URL
-    name?: string               // NFT name
-    attributes?: NftAttributes[] // NFT metadata attributes
-    mediaData?: any             // Additional media information
-    qrSerialNumber?: string     // QR code serial number if applicable
-  }[]
+  tokens: Token[]                // Array of minted tokens
+}
+
+interface Token {
+  token_id: string              // Unique identifier of the NFT
+  token_uri: string             // Metadata URI
+  price?: number                // Individual token price
+  image?: string                // NFT image URL
+  name?: string                 // NFT name
+  attributes?: NftAttributes[]  // NFT metadata attributes
+  mediaData?: any               // Additional media information
+  qrSerialNumber?: string       // QR code serial number if applicable
+}
+
+interface NftAttributes {
+  trait_type: string
+  value: string | number
 }
 ```
 

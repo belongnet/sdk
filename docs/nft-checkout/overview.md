@@ -18,8 +18,8 @@ Create seamless NFT purchases with a fully customizable checkout experience inte
 
 - [Create Order](./create-order.md) - Learn how to create a checkout order
 - [Quick Start Guide](./quickstart.md) - Get started with UI implementation
-- [Integration Guide](./integration.md) - Detailed integration steps
 - [Event Handling](./events.md) - Handle payment events
+- [Transaction Status](./checkout.md#getting-transaction-status) - Monitor transaction status
 - [Advanced Topics](./advanced.md) - Advanced features and customization
 - [API Reference](./api-reference.md) - Complete API documentation
 

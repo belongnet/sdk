@@ -49,16 +49,19 @@ export default defineConfig({
         items: [
           { text: 'Overview', link: '/overview' },
           { text: 'Installation', link: '/installation' },
-          { text: 'Get Status', link: '/get-status' },
         ],
       },
       {
         text: 'NFT Checkout',
         items: [
           { text: 'Overview', link: '/nft-checkout/overview' },
-          { text: 'Create Order', link: '/nft-checkout/create-order' },
           { text: 'Quick Start', link: '/nft-checkout/quickstart' },
+          { text: 'Create Order', link: '/nft-checkout/create-order' },
           { text: 'Event Handling', link: '/nft-checkout/events' },
+          {
+            text: 'Transaction Status',
+            link: '/nft-checkout/checkout#getting-transaction-status',
+          },
           { text: 'Advanced Topics', link: '/nft-checkout/advanced' },
           { text: 'API Reference', link: '/nft-checkout/api-reference' },
         ],
