@@ -61,11 +61,11 @@ enum PaymentEvent {
 
 ```typescript
 interface SuccessPayload {
-  address: Hex // The wallet address that completed the payment
-  hash?: Hex // Transaction hash (present after blockchain confirmation)
+  address: string // The wallet address that completed the payment
+  hash?: string // Transaction hash (present after blockchain confirmation)
   block_number?: number // Block number (present after blockchain confirmation)
   cryptoAddress: {
-    address: Address // The wallet address in standard format
+    address: string // The wallet address in standard format
   }
   total?: number // Total amount paid (in ETH)
   minted_price?: number // Price per NFT (in ETH)
@@ -99,9 +99,6 @@ interface ErrorPayload {
 ## Type Definitions
 
 ```typescript
-type Hex = string // Hexadecimal string
-type Address = string // Blockchain address string
-
 interface NftAttributes {
   trait_type: string
   value: string | number

@@ -58,6 +58,7 @@ createPaymentFrame({
   params: {
     target: 'checkout',
     checkoutId: checkoutId,
+    email: 'user@example.com',
   },
 })
 ```
@@ -65,24 +66,30 @@ createPaymentFrame({
 ### 4. Handle Payment Events
 
 ```typescript
-window.addEventListener('message', (e) => {
-  if (e.origin !== 'https://checkout.belong.io') return
+import { isPaymentEvent } from '@belongnet/sdk'
 
-  switch (e.data.type) {
-    case 'payment-success':
-      console.log('Payment successful!')
-      break
-    case 'payment-error':
-      console.log('Payment failed:', e.data.payload.message)
-      break
+function handlePayment(e: MessageEvent) {
+  if (isPaymentEvent(e)) {
+    switch (e.data.type) {
+      case 'payment-success':
+        // logic for successful payment
+        console.log('payment-success', e.data.payload)
+        break
+      case 'payment-error':
+        // logic for payment error
+        console.log('payment-error', e.data.payload)
+        break
+    }
   }
-})
+}
+
+window.addEventListener('message', handlePayment)
 ```
 
 ## Complete Example
 
 ```typescript
-import { createPaymentFrame } from '@belongnet/sdk'
+import { createPaymentFrame, isPaymentEvent } from '@belongnet/sdk'
 
 // 1. Create checkout order
 async function createOrder() {
@@ -117,22 +124,27 @@ createPaymentFrame({
   params: {
     target: 'checkout',
     checkoutId: checkoutId,
+    email: 'user@example.com',
   },
 })
 
 // 3. Handle events
-window.addEventListener('message', (e) => {
-  if (e.origin !== 'https://checkout.belong.io') return
-
-  switch (e.data.type) {
-    case 'payment-success':
-      console.log('Payment successful!')
-      break
-    case 'payment-error':
-      console.log('Payment failed:', e.data.payload.message)
-      break
+function handlePayment(e: MessageEvent) {
+  if (isPaymentEvent(e)) {
+    switch (e.data.type) {
+      case 'payment-success':
+        // logic for successful payment
+        console.log('payment-success', e.data.payload)
+        break
+      case 'payment-error':
+        // logic for payment error
+        console.log('payment-error', e.data.payload)
+        break
+    }
   }
-})
+}
+
+window.addEventListener('message', handlePayment)
 ```
 
 ## Next Steps

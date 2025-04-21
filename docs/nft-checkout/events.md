@@ -15,11 +15,11 @@ Learn how to handle various events during the NFT checkout process.
 
 ```typescript
 {
-  address: Hex                    // Purchaser's wallet address
-  hash?: Hex                      // Transaction hash
+  address: string                    // Purchaser's wallet address
+  hash?: string                      // Transaction hash
   block_number?: number           // Block number of the transaction
   cryptoAddress: {
-    address: Address             // Blockchain address
+    address: string             // Blockchain address
   }
   total?: number                 // Total purchase amount
   minted_price?: number          // Price at which NFT was minted

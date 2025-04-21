@@ -131,14 +131,12 @@ Creates a payment frame for embedding payment forms.
 **Example:**
 
 ```js
-import { PaymentTarget } from '@belongnet/sdk'
-
 const { frame, url } = createPaymentFrame({
   el: document.getElementById('payment-frame'),
   origin: 'https://example.com',
   params: {
-    target: PaymentTarget.EventTicket,
-    eventId: '65f1c7a33e51d8e4c2a9b4d2',
+    target: 'event-ticket',
+    eventId: 'f9b2ea4c7be71407fcb6ed2c',
   },
 })
 ```
@@ -171,25 +169,20 @@ Checks if the provided event is a Belong payment event.
 
 ### `PaymentTarget`
 
-Available payment targets for different use cases:
+#### `Checkout`
+
+- **Type**: `string`
+- **Default**: `"checkout"`
 
 #### `EventTicket`
 
 - **Type**: `string`
 - **Default**: `"event-ticket"`
-- **Description**: Used for event ticket purchases. Requires `eventId` parameter.
 
 #### `HubMinting`
 
 - **Type**: `string`
 - **Default**: `"hub-minting"`
-- **Description**: Used for hub minting operations. Requires `hubId` parameter.
-
-#### `Checkout`
-
-- **Type**: `string`
-- **Default**: `"checkout"`
-- **Description**: Used for general checkout operations. Requires `checkoutId` parameter.
 
 ### `validateEvent(data)`
 
