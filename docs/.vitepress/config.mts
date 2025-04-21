@@ -54,7 +54,14 @@ export default defineConfig({
       },
       {
         text: 'NFT Checkout',
-        items: [{ text: 'Checkout', link: '/nft-checkout/checkout' }],
+        items: [
+          { text: 'Overview', link: '/nft-checkout/overview' },
+          { text: 'Create Order', link: '/nft-checkout/create-order' },
+          { text: 'Quick Start', link: '/nft-checkout/quickstart' },
+          { text: 'Event Handling', link: '/nft-checkout/events' },
+          { text: 'Advanced Topics', link: '/nft-checkout/advanced' },
+          { text: 'API Reference', link: '/nft-checkout/api-reference' },
+        ],
       },
       {
         text: 'Guides',

@@ -1,6 +1,40 @@
 import * as v from 'valibot'
 import { PaymentEvent, PaymentTarget } from './enums.js'
-import type { MintedNft } from './types.js'
+
+export const NftAttributesSchema = v.object({
+  trait_type: v.string(),
+  display_type: v.union([
+    v.literal('date'),
+    v.literal('string'),
+    v.literal('number'),
+    v.literal('boost_number'),
+    v.literal('boost_percentage'),
+  ]),
+  value: v.string(),
+})
+
+export const NftTokenSchema = v.object({
+  token_id: v.string(),
+  token_uri: v.string(),
+  price: v.optional(v.number()),
+  image: v.optional(v.string()),
+  name: v.optional(v.string()),
+  attributes: v.optional(v.array(NftAttributesSchema)),
+  mediaData: v.optional(v.any()),
+  qrSerialNumber: v.optional(v.string()),
+})
+
+export const NftSchema = v.object({
+  address: v.string(),
+  hash: v.optional(v.string()),
+  block_number: v.optional(v.number()),
+  cryptoAddress: v.object({
+    address: v.string(),
+  }),
+  total: v.optional(v.number()),
+  minted_price: v.optional(v.number()),
+  tokens: v.array(NftTokenSchema),
+})
 
 /**
  * Schema for payment frame parameters
@@ -58,7 +92,7 @@ export const PaymentEventDataSchema = v.variant('type', [
   v.object({
     type: v.literal(PaymentEvent.PaymentSuccess),
     payload: v.object({
-      nft: v.object<MintedNft>(),
+      nft: NftSchema,
       link: v.string(),
       message: v.string(),
     }),
