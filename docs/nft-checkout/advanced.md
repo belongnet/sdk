@@ -11,7 +11,7 @@ createPaymentFrame({
   params: {
     target: PaymentTarget.Checkout,
     checkoutId: 'your-checkout-id',
-    coupon: 'DISCOUNT10', // Optional coupon code
+    email: 'user@example.com',
   },
 })
 ```
@@ -38,46 +38,6 @@ createPaymentFrame({
    - Implement proper error boundaries
    - Log errors appropriately
    - Provide user-friendly error messages
-
-## Multiple NFT Purchase
-
-```typescript
-createPaymentFrame({
-  el: document.getElementById('nft-checkout-frame'),
-  params: {
-    target: PaymentTarget.Checkout,
-    checkoutId: 'your-checkout-id',
-    tokens: [
-      { id: 'token1', quantity: 2 },
-      { id: 'token2', quantity: 1 },
-    ],
-  },
-})
-```
-
-## Custom Styling
-
-You can customize the appearance of the checkout frame:
-
-```typescript
-createPaymentFrame({
-  el: document.getElementById('nft-checkout-frame'),
-  params: {
-    target: PaymentTarget.Checkout,
-    checkoutId: 'your-checkout-id',
-    theme: {
-      colors: {
-        primary: '#FF5733',
-        secondary: '#33FF57',
-        background: '#FFFFFF',
-        text: '#000000',
-      },
-      borderRadius: '8px',
-      fontFamily: 'Arial, sans-serif',
-    },
-  },
-})
-```
 
 ## Advanced Event Handling
 

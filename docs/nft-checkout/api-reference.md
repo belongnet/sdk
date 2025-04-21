@@ -16,27 +16,9 @@ interface PaymentFrameOptions {
 }
 
 interface PaymentParams {
-  target: PaymentTarget // Payment target type
+  target: PaymentTarget // Payment target type (must be PaymentTarget.Checkout)
   checkoutId: string // Unique checkout identifier
-  coupon?: string // Optional coupon code
-  tokens?: TokenRequest[] // Optional token specifications
-  theme?: ThemeOptions // Optional theme customization
-}
-
-interface TokenRequest {
-  id: string // Token identifier
-  quantity: number // Quantity to purchase
-}
-
-interface ThemeOptions {
-  colors?: {
-    primary: string
-    secondary: string
-    background: string
-    text: string
-  }
-  borderRadius?: string
-  fontFamily?: string
+  email?: string
 }
 ```
 
@@ -52,13 +34,11 @@ function isPaymentEvent(event: MessageEvent): boolean
 
 ### PaymentTarget
 
-Available payment targets:
+Available payment target for NFT Checkout:
 
 ```typescript
 enum PaymentTarget {
   Checkout = 'checkout',
-  EventTicket = 'event-ticket',
-  HubMinting = 'hub-minting',
 }
 ```
 
@@ -81,15 +61,15 @@ enum PaymentEvent {
 
 ```typescript
 interface SuccessPayload {
-  address: Hex
-  hash?: Hex
-  block_number?: number
+  address: Hex // The wallet address that completed the payment
+  hash?: Hex // Transaction hash (present after blockchain confirmation)
+  block_number?: number // Block number (present after blockchain confirmation)
   cryptoAddress: {
-    address: Address
+    address: Address // The wallet address in standard format
   }
-  total?: number
-  minted_price?: number
-  tokens: Token[]
+  total?: number // Total amount paid (in ETH)
+  minted_price?: number // Price per NFT (in ETH)
+  tokens: Token[] // Array of minted tokens
 }
 
 interface Token {

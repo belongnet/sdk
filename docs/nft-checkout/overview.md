@@ -1,6 +1,6 @@
 # NFT Checkout Overview
 
-Create seamless NFT purchases with a fully customizable checkout experience integrated into your website.
+Create seamless NFT purchases with a checkout experience integrated into your website.
 
 ## Implementation Flow
 
@@ -11,8 +11,20 @@ Create seamless NFT purchases with a fully customizable checkout experience inte
 ## When to Use NFT Checkout?
 
 - **You want to embed NFT purchasing directly into your site**
-- **You need high level of control over the UI/UX**
+- **You need a reliable and secure checkout process**
 - **You want to provide a seamless minting experience**
+
+## Payment Methods
+
+Our checkout supports multiple payment methods through integration with:
+
+### Transak
+
+Transak provides a fiat-to-crypto payment solution, allowing users to purchase NFTs using credit cards and bank transfers.
+
+### Crossmint
+
+Crossmint enables users to purchase NFTs with credit cards, providing a familiar Web2 payment experience.
 
 ## Documentation Structure
 
@@ -25,9 +37,11 @@ Create seamless NFT purchases with a fully customizable checkout experience inte
 
 ## Features
 
-- Fully customizable UI/UX
+- Embedded checkout frame
 - Multiple payment methods support
+- Support for multiple NFTs in one order
 - Secure transaction handling
-- Real-time event notifications
-- Comprehensive error handling
-- Support for multiple NFT standards
+- Payment status events
+- Optional email parameter
+- Error handling
+- Transaction status monitoring

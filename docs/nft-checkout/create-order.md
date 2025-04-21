@@ -28,19 +28,9 @@ x-api-key: YOUR_API_KEY  # Contact join@belong.net to get your API key
   "items": [
     {
       "name": "Test NFT #1",
-      "description": "Description for Test NFT #1",
       "mintPrice": 0.1,
       "image": "https://example.com/nft1.jpg",
-      "quantity": 1,
-      "externalUrl": "https://example.com/nft1"
-    },
-    {
-      "name": "Test NFT #2",
-      "description": "Description for Test NFT #2",
-      "mintPrice": 0.2,
-      "image": "https://example.com/nft2.jpg",
-      "quantity": 2,
-      "externalUrl": "https://example.com/nft2"
+      "quantity": 1
     }
   ]
 }
@@ -51,11 +41,11 @@ x-api-key: YOUR_API_KEY  # Contact join@belong.net to get your API key
 - `collectionId` (required): Your NFT collection ID
 - `items` (required): Array of items to be minted
   - `name` (required): Name of the NFT
-  - `description`: Description of the NFT
   - `mintPrice` (required): Price in ETH
   - `image` (required): URL of the NFT image
   - `quantity` (required): Number of copies to mint
-  - `externalUrl`: External URL associated with the NFT
+  - `description` (optional): Description of the NFT
+  - `externalUrl` (optional): External URL for the NFT
 
 ## Response
 
@@ -69,16 +59,14 @@ x-api-key: YOUR_API_KEY  # Contact join@belong.net to get your API key
 
 ### Using the Response
 
-Use the `checkoutId` from the response to initialize the checkout UI:
-
 ```typescript
-import { createPaymentFrame, PaymentTarget } from '@belongnet/sdk'
+import { createPaymentFrame } from '@belongnet/sdk'
 
-const { frame } = createPaymentFrame({
+createPaymentFrame({
   el: document.getElementById('nft-checkout-frame'),
   params: {
-    target: PaymentTarget.Checkout,
-    checkoutId: 'checkout_id_here', // Use the checkoutId from the API response
+    target: 'checkout',
+    checkoutId: 'checkout_id_here',
   },
 })
 ```
@@ -88,31 +76,27 @@ const { frame } = createPaymentFrame({
 Using fetch:
 
 ```typescript
-async function createNftCheckout() {
-  const response = await fetch('https://api.belong.net/api/v2/nft-checkout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': 'YOUR_API_KEY',
-    },
-    body: JSON.stringify({
-      collectionId: '65f1c7a33e51d8e4c2a9b4d2',
-      items: [
-        {
-          name: 'Test NFT #1',
-          description: 'Description for Test NFT #1',
-          mintPrice: 0.1,
-          image: 'https://example.com/nft1.jpg',
-          quantity: 1,
-          externalUrl: 'https://example.com/nft1',
-        },
-      ],
-    }),
-  })
+const response = await fetch('https://api.belong.net/api/v2/nft-checkout', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': 'YOUR_API_KEY',
+  },
+  body: JSON.stringify({
+    collectionId: '65f1c7a33e51d8e4c2a9b4d2',
+    items: [
+      {
+        name: 'Test NFT #1',
+        mintPrice: 0.1,
+        image: 'https://example.com/nft1.jpg',
+        quantity: 1,
+      },
+    ],
+  }),
+})
 
-  const { data } = await response.json()
-  return data.checkoutId
-}
+const { data } = await response.json()
+const checkoutId = data.checkoutId
 ```
 
 Using axios:
@@ -120,30 +104,26 @@ Using axios:
 ```typescript
 import axios from 'axios'
 
-async function createNftCheckout() {
-  const { data } = await axios.post(
-    'https://api.belong.net/api/v2/nft-checkout',
-    {
-      collectionId: '65f1c7a33e51d8e4c2a9b4d2',
-      items: [
-        {
-          name: 'Test NFT #1',
-          description: 'Description for Test NFT #1',
-          mintPrice: 0.1,
-          image: 'https://example.com/nft1.jpg',
-          quantity: 1,
-          externalUrl: 'https://example.com/nft1',
-        },
-      ],
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': 'YOUR_API_KEY',
+const { data } = await axios.post(
+  'https://api.belong.net/api/v2/nft-checkout',
+  {
+    collectionId: '65f1c7a33e51d8e4c2a9b4d2',
+    items: [
+      {
+        name: 'Test NFT #1',
+        mintPrice: 0.1,
+        image: 'https://example.com/nft1.jpg',
+        quantity: 1,
       },
-    }
-  )
+    ],
+  },
+  {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': 'YOUR_API_KEY',
+    },
+  }
+)
 
-  return data.data.checkoutId
-}
+const checkoutId = data.data.checkoutId
 ```
