@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.1.11
+
+[compare changes](https://github.com/belongnet/sdk/compare/v0.1.10...v0.1.11)
+
+### 💅 Refactors
+
+- **docs:** Fix small changes ([dcb2acf](https://github.com/belongnet/sdk/commit/dcb2acf))
+- Payload structure ([8969796](https://github.com/belongnet/sdk/commit/8969796))
+- Payload type ([fe8d71c](https://github.com/belongnet/sdk/commit/fe8d71c))
+- Docs ([ee218a2](https://github.com/belongnet/sdk/commit/ee218a2))
+- Example ([0d35a90](https://github.com/belongnet/sdk/commit/0d35a90))
+- Upd ([32f6198](https://github.com/belongnet/sdk/commit/32f6198))
+- Types ([216b5d0](https://github.com/belongnet/sdk/commit/216b5d0))
+- Readme ([516565f](https://github.com/belongnet/sdk/commit/516565f))
+
+### ❤️ Contributors
+
+- Dmitry Skakun <dmitry.s@catigen.com>
+- Reslear ([@reslear](https://github.com/reslear))
+
 ## v0.1.10
 
 [compare changes](https://github.com/belongnet/sdk/compare/v0.1.9...v0.1.10)
