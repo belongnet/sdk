@@ -25,7 +25,6 @@ import { formatCode } from '../formatter'
 // import { fromHash, toHash } from '../utils/hash'
 import { useHighlighter } from '../composables/useHighlighter'
 
-
 const belongPaymentRef = ref<HTMLElement | null>(null)
 const highlighter = useHighlighter()
 const isDark = useDark()
@@ -47,6 +46,7 @@ const defaultState = {
     eventId: '65cca181e81ea188206cf1dc',
     hubId: undefined,
     checkoutId: undefined,
+    email: 'test@test.com',
   },
 } as const
 
@@ -104,34 +104,39 @@ function setPrivateKey(e: Event) {
 const errors = ref<string>()
 
 function isCorrectId(id: string) {
-  return ('' + id).length //  && (isMongoId(id) || isSlug(id)) 
+  return ('' + id).length //  && (isMongoId(id) || isSlug(id))
 }
 
 const paramsToCode = computed(() => {
   const p = toValue(state.value.params)
 
+  // Base params without email
+  let params: any = {}
+
   if (p.target === PaymentTarget.EventTicket) {
-    return {
+    params = {
       target: p.target,
       key: p?.key,
       eventId: p.eventId,
       coupon: p?.coupon,
+      email: p.email,
     }
-  }
-
-  if (p.target === PaymentTarget.HubMinting) {
-    return {
+  } else if (p.target === PaymentTarget.HubMinting) {
+    params = {
       target: p.target,
       hubId: p.hubId,
       key: p?.key,
+      email: p.email,
+    }
+  } else {
+    // Checkout target
+    params = {
+      target: p.target,
+      checkoutId: p.checkoutId,
+      email: p.email?.toString(),
     }
   }
-
-  // Checkout target
-  return {
-    target: p.target,
-    checkoutId: p.checkoutId,
-  }
+  return params
 })
 
 const paymentFrame = ref()
@@ -154,6 +159,7 @@ function generatePaymentFrame() {
         origin: state.value.origin,
         params: paramsToCode.value,
       })
+
       paymentFrame.value = result
     } catch (e: any) {
       console.error(e)
@@ -205,13 +211,18 @@ onMounted(() => {
 
 const sourceHtmlCode = ref('')
 
+const displayUrl = computed(() => {
+  if (!paymentFrame.value?.url) return ''
+  return paymentFrame.value.url.replace(/%40/g, '@')
+})
+
 watchEffect(() => {
   formatCode(`
     createPaymentFrame({${state.value.origin ? `\norigin: '${state.value.origin}',` : ''}
       el: document.getElementById('belong-payment-frame'),
       params: ${JSON.stringify(paramsToCode.value, null, 2)},
     })`).then((code) => {
-    sourceHtmlCode.value = code
+    sourceHtmlCode.value = code.replace(/%40/g, '@')
   })
 })
 
@@ -228,12 +239,15 @@ const htmlCode = computed(() => {
 </script>
 
 <template>
-
-  <div class="paygen gap-8 min-h-screen flex flex-col md:flex-row w-full mx-auto my-10">
-
+  <div
+    class="paygen gap-8 min-h-screen flex flex-col md:flex-row w-full mx-auto my-10"
+  >
     <section class="md:h-[80vh] flex-1">
-      <div class="m-0! app-frame mac wireframe borderless scrolling h-full" :class="isDark ? 'dark' : ''"
-        data-title="Payment Frame Generator">
+      <div
+        class="m-0! app-frame mac wireframe borderless scrolling h-full"
+        :class="isDark ? 'dark' : ''"
+        data-title="Payment Frame Generator"
+      >
         <div ref="belongPaymentRef"></div>
       </div>
     </section>
@@ -242,30 +256,57 @@ const htmlCode = computed(() => {
       <section class="flex flex-col gap-2">
         <section>
           <h4>Target:</h4>
-          <input type="radio" :id="PaymentTarget.EventTicket" :value="PaymentTarget.EventTicket"
-            v-model="state.params.target" />
+          <input
+            type="radio"
+            :id="PaymentTarget.EventTicket"
+            :value="PaymentTarget.EventTicket"
+            v-model="state.params.target"
+          />
           <label :for="PaymentTarget.EventTicket">Event Ticket</label><br />
-          <input type="radio" :id="PaymentTarget.HubMinting" :value="PaymentTarget.HubMinting"
-            v-model="state.params.target" />
+          <input
+            type="radio"
+            :id="PaymentTarget.HubMinting"
+            :value="PaymentTarget.HubMinting"
+            v-model="state.params.target"
+          />
           <label :for="PaymentTarget.HubMinting">Hub minting</label><br />
-          <input type="radio" :id="PaymentTarget.Checkout" :value="PaymentTarget.Checkout"
-            v-model="state.params.target" />
+          <input
+            type="radio"
+            :id="PaymentTarget.Checkout"
+            :value="PaymentTarget.Checkout"
+            v-model="state.params.target"
+          />
           <label :for="PaymentTarget.Checkout">Checkout</label><br />
         </section>
         <section>
           <template v-if="state.params.target === PaymentTarget.EventTicket">
             <h4>Event ID:</h4>
-            <input type="text" v-model="state.params.eventId" placeholder="Event ID" maxlength="50" />
+            <input
+              type="text"
+              v-model="state.params.eventId"
+              placeholder="Event ID"
+              maxlength="50"
+            />
           </template>
 
           <template v-if="state.params.target === PaymentTarget.HubMinting">
             <h4>Hub ID:</h4>
-            <input type="text" v-model="state.params.hubId" placeholder="Hub ID" maxlength="50" />
+            <input
+              type="text"
+              v-model="state.params.hubId"
+              placeholder="Hub ID"
+              maxlength="50"
+            />
           </template>
 
           <template v-if="state.params.target === PaymentTarget.Checkout">
             <h4>Checkout ID:</h4>
-            <input type="text" v-model="state.params.checkoutId" placeholder="Checkout ID" maxlength="50" />
+            <input
+              type="text"
+              v-model="state.params.checkoutId"
+              placeholder="Checkout ID"
+              maxlength="50"
+            />
           </template>
 
           <div>Enter correct <b>slug</b> or <b>id (ObjectId)</b></div>
@@ -273,23 +314,39 @@ const htmlCode = computed(() => {
 
         <section class="flex flex-col gap-2">
           <div>
-            <input id="private_key" type="checkbox" :checked="state.params.target !== PaymentTarget.Checkout &&
-              state.params.key !== undefined
-              " @change="setPrivateKey" />
+            <input
+              id="private_key"
+              type="checkbox"
+              :checked="
+                state.params.target !== PaymentTarget.Checkout &&
+                state.params.key !== undefined
+              "
+              @change="setPrivateKey"
+            />
             <label for="private_key">Private</label>
           </div>
 
           <template v-if="state.params.target !== PaymentTarget.Checkout">
             <h5>Key:</h5>
             <div>
-              <input type="text" v-model="state.params.key" placeholder="Enter Key..." maxlength="50" />
+              <input
+                type="text"
+                v-model="state.params.key"
+                placeholder="Enter Key..."
+                maxlength="50"
+              />
             </div>
 
             <template v-if="state.params.target === PaymentTarget.EventTicket">
               <h5>Coupon:</h5>
               <div>
-                <input type="text" :value="'coupon' in state.params ? state.params.coupon : ''" @input="setCoupon"
-                  placeholder="Enter coupon..." maxlength="50" />
+                <input
+                  type="text"
+                  :value="'coupon' in state.params ? state.params.coupon : ''"
+                  @input="setCoupon"
+                  placeholder="Enter coupon..."
+                  maxlength="50"
+                />
                 <p>If you enter a coupon, it must match the private key.</p>
               </div>
             </template>
@@ -297,17 +354,36 @@ const htmlCode = computed(() => {
         </section>
 
         <section class="flex flex-col gap-2">
+          <h5>Email:</h5>
+          <div>
+            <input
+              type="text"
+              v-model="state.params.email"
+              placeholder="Enter Email..."
+              maxlength="50"
+            />
+          </div>
           <h3>Additional:</h3>
           <div>
-            <input id="custom_origin" type="checkbox" :checked="state.origin !== undefined" @change="
-              ($event.target as HTMLInputElement).checked
-                ? (state.origin = '')
-                : (state.origin = undefined)
-              " />
+            <input
+              id="custom_origin"
+              type="checkbox"
+              :checked="state.origin !== undefined"
+              @change="
+                ($event.target as HTMLInputElement).checked
+                  ? (state.origin = '')
+                  : (state.origin = undefined)
+              "
+            />
             <label for="custom_origin">Enable custom origin</label>
           </div>
-          <input v-if="state.origin !== undefined" type="text" v-model="state.origin"
-            placeholder="Enter custom Origin..." maxlength="61" />
+          <input
+            v-if="state.origin !== undefined"
+            type="text"
+            v-model="state.origin"
+            placeholder="Enter custom Origin..."
+            maxlength="61"
+          />
         </section>
       </section>
 
@@ -316,17 +392,20 @@ const htmlCode = computed(() => {
           {{ errors }}
         </div>
 
-        <button @click="generatePaymentFrame()">
-          Generate Payment Frame
-        </button>
+        <button @click="generatePaymentFrame()">Generate Payment Frame</button>
       </section>
 
       <section class="flex flex-col gap-2">
         <div v-if="paymentFrame?.url">
           <h3>Url:</h3>
           <div class="code-container">
-            <input type="text" :value="paymentFrame.url" readonly />
-            <a title="Open in new tab" class="button copy copy--input" :href="paymentFrame.url" target="_blank">
+            <input type="text" :value="displayUrl" readonly />
+            <a
+              title="Open in new tab"
+              class="button copy copy--input"
+              :href="displayUrl"
+              target="_blank"
+            >
               <Icon icon="ion:open"></Icon>
             </a>
           </div>
@@ -335,17 +414,19 @@ const htmlCode = computed(() => {
         <div>
           <h3>Code:</h3>
           <div class="code-container">
-            <button title="Copy Code" class="copy" @click="copy(sourceHtmlCode)">
+            <button
+              title="Copy Code"
+              class="copy"
+              @click="copy(sourceHtmlCode)"
+            >
               <Icon icon="ion:copy"></Icon>
             </button>
             <div v-html="htmlCode" class="code"></div>
           </div>
         </div>
-
       </section>
     </section>
   </div>
-
 </template>
 
 <style>
@@ -358,7 +439,6 @@ html.dark .shiki span {
 } */
 
 .paygen {
-
   button {
     margin: 0.6em;
     border-radius: 8px;
@@ -389,8 +469,6 @@ html.dark .shiki span {
   .card {
     padding: 2em;
   }
-
-
 
   .code-container {
     @apply relative mt-2;
@@ -427,7 +505,7 @@ html.dark .shiki span {
   h4 {
     @apply text-base font-bold;
 
-    &+input {
+    & + input {
       @apply mt-2;
     }
   }
@@ -438,7 +516,7 @@ html.dark .shiki span {
 
   input[type='radio'],
   input[type='checkbox'] {
-    &+label {
+    & + label {
       @apply pl-2 cursor-pointer;
     }
   }
@@ -466,6 +544,5 @@ html.dark .shiki span {
       background-position: 0% 92%;
     }
   }
-
 }
 </style>

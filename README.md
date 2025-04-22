@@ -47,7 +47,9 @@ You can also try [jsDelivr](https://www.jsdelivr.com/) or [unpkg](https://unpkg.
 The SDK supports several payment targets for different use cases:
 
 ##### Event Ticket Payment
+
 Used for purchasing tickets to events. Requires an `eventId` to identify the specific event.
+
 ```ts
 import { PaymentTarget } from '@belongnet/sdk'
 
@@ -61,7 +63,9 @@ createPaymentFrame({
 ```
 
 ##### Hub Minting Payment
+
 Used for minting operations within a hub. Requires a `hubId` to identify the specific hub.
+
 ```ts
 createPaymentFrame({
   el: document.getElementById('belong-payment-frame'),
@@ -73,7 +77,9 @@ createPaymentFrame({
 ```
 
 ##### Checkout Payment
+
 Used for general checkout operations. Requires a `checkoutId` to identify the specific checkout session.
+
 ```ts
 createPaymentFrame({
   el: document.getElementById('belong-payment-frame'),
@@ -171,25 +177,20 @@ Checks if the provided event is a Belong payment event.
 
 ### `PaymentTarget`
 
-Available payment targets for different use cases:
+#### `Checkout`
+
+- **Type**: `string`
+- **Default**: `"checkout"`
 
 #### `EventTicket`
 
 - **Type**: `string`
 - **Default**: `"event-ticket"`
-- **Description**: Used for event ticket purchases. Requires `eventId` parameter.
 
 #### `HubMinting`
 
 - **Type**: `string`
 - **Default**: `"hub-minting"`
-- **Description**: Used for hub minting operations. Requires `hubId` parameter.
-
-#### `Checkout`
-
-- **Type**: `string`
-- **Default**: `"checkout"`
-- **Description**: Used for general checkout operations. Requires `checkoutId` parameter.
 
 ### `validateEvent(data)`
 
@@ -207,25 +208,28 @@ Each target requires specific parameters. Here's a detailed breakdown:
 
 ### Event Ticket Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `target` | `PaymentTarget` | Must be `PaymentTarget.EventTicket` |
-| `eventId` | `string` | Unique identifier of the event (24 characters) |
-| `coupon` | `string` | Optional coupon code for discounts |
+| Parameter | Type            | Description                                    |
+| --------- | --------------- | ---------------------------------------------- |
+| `target`  | `PaymentTarget` | Must be `PaymentTarget.EventTicket`            |
+| `eventId` | `string`        | Unique identifier of the event (24 characters) |
+| `coupon`  | `string`        | Optional coupon code for discounts             |
+| `email`   | `string`        | Email user                                     |
 
 ### Hub Minting Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `target` | `PaymentTarget` | Must be `PaymentTarget.HubMinting` |
-| `hubId` | `string` | Unique identifier of the hub (24 characters) |
+| Parameter | Type            | Description                                  |
+| --------- | --------------- | -------------------------------------------- |
+| `target`  | `PaymentTarget` | Must be `PaymentTarget.HubMinting`           |
+| `hubId`   | `string`        | Unique identifier of the hub (24 characters) |
+| `email`   | `string`        | Email user                                   |
 
 ### Checkout Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `target` | `PaymentTarget` | Must be `PaymentTarget.Checkout` |
-| `checkoutId` | `string` | Unique identifier of the checkout (24 characters) |
+| Parameter    | Type            | Description                                       |
+| ------------ | --------------- | ------------------------------------------------- |
+| `target`     | `PaymentTarget` | Must be `PaymentTarget.Checkout`                  |
+| `checkoutId` | `string`        | Unique identifier of the checkout (24 characters) |
+| `email`      | `string`        | Email user                                        |
 
 ## License
 
