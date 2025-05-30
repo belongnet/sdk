@@ -67,6 +67,13 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Sui',
+        items: [
+          { text: 'Overview', link: '/sui/overview' },
+          { text: 'Quick Start', link: '/sui/quickstart' },
+        ],
+      },
+      {
         text: 'Guides',
         items: [
           {
